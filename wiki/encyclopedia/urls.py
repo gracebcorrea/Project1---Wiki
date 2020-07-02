@@ -9,5 +9,5 @@ urlpatterns = [
     path("RandomPage", views.RandomPage, name="RandomPage"),
     path("EntryPage", views.EntryPage, name="EntryPage"),
     path("EditPage", views.EditPage, name="EditPage"),
-    path("<str:entry>",views.Entries, name="Entries")
+    path("<str:NewEntry>",views.Entries, name="Entries")
 ]
