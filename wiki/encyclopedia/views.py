@@ -18,6 +18,30 @@ def index(request):
         "encyclopedia": request.session["Pwiki"]
     })
 
+
+
+#New Files
+def Entries(request):
+    if request.method == "POST":
+        form = NewEntrieForm(request.POST)
+        if form.is_valid():
+            entrie = form.cleaned_data["entry"]
+            request.session["entries"] += [entry]
+            return HttpResponseRedirect(reverse("entries:index"))
+        else:
+            return render(request, "entries/{{entry}}.html", {
+                "form": form
+            })
+    else:
+        return render(request, "entries/<entry>.html", {
+            "form": NewEntrieForm()
+        })
+
+
+def AlertsDjango(request):
+    return render(request, "Alerts/AlertsDjango.html")
+
+
 def NewPage(request):
     return ("NewPage.html")
 
@@ -25,19 +49,5 @@ def RandomPage(request):
     return ("RandomPage.html")
 
 
-#New Files
-def add(request):
-    if request.method == "POST":
-        form = NewentrieForm(request.POST)
-        if form.is_valid():
-            entrie = form.cleaned_data["entrie"]
-            request.session["entries"] += [entrie]
-            return HttpResponseRedirect(reverse("entries:index"))
-        else:
-            return render(request, "entries/add.html", {
-                "form": form
-            })
-    else:
-        return render(request, "entries/add.html", {
-            "form": NewentrieForm()
-        })
+def EntryPage(request):
+    return ("EntryPage.html")
