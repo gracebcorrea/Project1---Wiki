@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<image rel="stylesheet" href="{{url_for('static', filename="avatar.jpg")}}">
+<image rel="stylesheet" href="{{url_for('static', filename="MC2.jpg")}}">
+
+<script>
+  function Myredirect() {
+      window.location.assign("{{NewUrl}}");
+  }
+</script>
+
+<style>
+
+.alert {
+  padding: 20px;
+  color: white;
+  width: 80%;
+  margin-left: 100px;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 35px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+img {
+      margin-left: 300px;
+      padding: 20px;
+       }
+
+
+</style>
+
+</head>
+<body>
+
+<h2 style="margin-left: 100px">Alert Messages</h2>
+
+<p style="margin-left: 100px">Click on the "x" symbol to close the alert message.</p>
+{% if tipo == "alert alert-danger" %}
+     <div class="alert alert-danger">
+     <span class="closebtn" onclick="Myredirect()"  id="message">&times;</span>
+     <strong>ERROR !</strong> {{ message }}.
+     </div>
+     <p> <img class="rouded-circle"   src="static/avatar.jpg" alt="My avatar" style="width:300px;">  </p>
+{% endif %}
+{% if tipo == "alert alert-success" %}
+      <div class="alert alert-success">
+      <span class="closebtn" onclick="Myredirect()" id="message"  >&times;</span>
+      <strong>SUCCESS!</strong> {{ message }}.
+     </div>
+     <p> <img class="rouded-circle" src="static/MC.jpg" alt="MC" style="width:600px;" >  </p>
+{% endif %}
+{% if tipo == "alert alert-primary" %}
+    <div class="alert alert-primary">
+    <span class="closebtn" onclick="Myredirect()" id="message">&times;</span>
+    <strong>WARNING:!</strong> {{ message }}.
+    </div>
+     <p> <img class="rouded-circle" src="static/MC.jpg" alt="MC"  style="width:600px;"  >  </p>
+{% endif %}
+{% if tipo == "alert alert-warning" %}
+    <div class="alert alert-warning">
+    <span class="closebtn" onclick="Myredirect()" id="message">&times;</span>
+    <strong>Teste de variáveis:!</strong> {{a}}, {{b}}, {{c }}, {{d}}.
+    </div>
+    <p> <img class="rouded-circle"   src="static/avatar.jpg" alt="My avatar" style="width:300px;">  </p>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
