@@ -6,7 +6,7 @@ from django.urls import reverse
 from . import util
 
 class NewEntrieForm(forms.Form):
-    entrie = forms.CharField(label="New Entrie")
+    entry = forms.CharField(label="New Entry")
 
 
 def index(request):
@@ -19,6 +19,23 @@ def index(request):
     })
 
 
+
+def AlertsDjango(request):
+    return render(request, "encyclopedia/AlertsDjango.html")
+
+
+def NewPage():
+    return ("encyclopedia/NewPage.html")
+
+def RandomPage():
+    return ( "encyclopedia/RandomPage.html")
+
+
+def EntryPage(request):
+    return (request, "encyclopedia/EntryPage.html")
+
+def EditPage(request):
+    return (request, "encyclopedia/EditPage.html")
 
 #New Files
 def Entries(request):
@@ -36,21 +53,3 @@ def Entries(request):
         return render(request, "entries/<entry>.html", {
             "form": NewEntrieForm()
         })
-
-
-def AlertsDjango(request):
-    return render(request, "Alerts/AlertsDjango.html")
-
-
-def NewPage(request):
-    return ("NewPage.html")
-
-def RandomPage(request):
-    return ("RandomPage.html")
-
-
-def EntryPage(request):
-    return ("EntryPage.html")
-
-def EditPage(request):
-    return ("EditPage.html")    
