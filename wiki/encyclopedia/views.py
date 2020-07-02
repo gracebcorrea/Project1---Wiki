@@ -24,11 +24,11 @@ def AlertsDjango(request):
     return render(request, "encyclopedia/AlertsDjango.html")
 
 
-def NewPage():
-    return ("encyclopedia/NewPage.html")
+def NewPage(request):
+    return (request,"encyclopedia/NewPage.html")
 
-def RandomPage():
-    return ( "encyclopedia/RandomPage.html")
+def RandomPage(request):
+    return (request, "encyclopedia/RandomPage.html")
 
 
 def EntryPage(request):
@@ -42,14 +42,14 @@ def Entries(request):
     if request.method == "POST":
         form = NewEntrieForm(request.POST)
         if form.is_valid():
-            entrie = form.cleaned_data["entry"]
+            entry = form.cleaned_data["entry"]
             request.session["entries"] += [entry]
             return HttpResponseRedirect(reverse("entries:index"))
         else:
-            return render(request, "entries/{{entry}}.html", {
+            return render(request, "index.html", {
                 "form": form
             })
     else:
-        return render(request, "entries/<entry>.html", {
+        return render(request, "index.html.html", {
             "form": NewEntrieForm()
         })
