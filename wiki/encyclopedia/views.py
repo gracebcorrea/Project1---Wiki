@@ -46,10 +46,10 @@ def Entries(request):
             request.session["entries"] += [entry]
             return HttpResponseRedirect(reverse("entries:index"))
         else:
-            return render(request, "index.html", {
+            return render(request, "entries/index.html", {
                 "form": form
             })
     else:
-        return render(request, "index.html.html", {
+        return render(request, "entries/index.html", {
             "form": NewEntrieForm()
         })
