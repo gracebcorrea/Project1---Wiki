@@ -51,3 +51,6 @@ def RandomPage(request):
 
 def EntryPage(request):
     return ("EntryPage.html")
+
+def EditPage(request):
+    return ("EditPage.html")    
