@@ -4,10 +4,10 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("AlertsDjango", views.add, name="AlertsDjango"),
-    path("EditPage", views.add, name="EditPage"),
-    path("EntryPage", views.add, name="EntryPage"),
-    path("NewPage", views.add, name="Newpage"),
-    path("RandomPage", views.add, name="RandomPage")
-
+    path("AlertsDjango", views.AlertsDjango, name="AlertsDjango"),
+    path("EditPage", views.EditPage, name="EditPage"),
+    path("EntryPage", views.EntryPage, name="EntryPage"),
+    path("NewPage", views.NewPage, name="NewPage"),
+    path("RandomPage", views.RandomPage, name="RandomPage"),
+    path("<str:entry>",views.Entries, name="entries")
 ]
