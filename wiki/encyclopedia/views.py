@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from . import util
@@ -21,7 +21,7 @@ def index(request):
 
 
 def AlertsDjango(request):
-    return render(request, "encyclopedia/AlertsDjango.html",{})
+    return render(request, "encyclopedia/AlertsDjango.html",{"message":"Alerts"})
 
 
 #New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create a new encyclopedia entry.
@@ -31,12 +31,18 @@ def AlertsDjango(request):
 #Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
 
 def NewPage(request):
-    return ("NewPage.html")
+    if request.method == "GET":
+        return HttpResponse("Error. Wrong request method for New Page")
+    else:
+        return HttpResponseRedirect(reverse("NewPage"))
 
 #Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
 
 def RandomPage(request):
-    return ("RandomPage.html")
+    if request.method == "GET":
+        return HttpResponse("Error. Wrong request method for Random")
+    else:
+        return HttpResponseRedirect(reverse("RandomPage"))
 
 #Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
 #converted to HTML before being displayed to the user. You may use the python-markdown2 package
@@ -45,7 +51,7 @@ def RandomPage(request):
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 def EntryPage(request):
-    return (request, "encyclopedia/EntryPage.html",{})
+    return (request, "encyclopedia/EntryPage.html",{"message":"Entry Page"})
 
 
 #Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
@@ -54,7 +60,7 @@ def EntryPage(request):
 #Once the entry is saved, the user should be redirected back to that entry’s page.
 
 def EditPage(request):
-    return (request, "encyclopedia/EditPage.html",{})
+    return (request, "encyclopedia/EditPage.html",{"message":"Edit Page"})
 
 #New Files
 def Entries(request):
