@@ -25,7 +25,7 @@
 
 
 <div class ="flex-container"  >
-    <form  action= "{% url 'NewPage' %}" method="post">
+    <form  action= "{% url 'encyclopedia:NewPage' %}" method="post">
         <br>
         <label for="NewTitle"><b>Research Title Name :</b></label>
         <p>Please choose a word to tag your Item.<p>
@@ -38,7 +38,7 @@
         <br>
         <form class="form-inline">
              <button type="button" class="btn btn-success">Post</button>
-             <button type="button" class="btn btn-danger" onclick="goback()">Cancel</button>
+             <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
         </form>
     </form>
 </div>
