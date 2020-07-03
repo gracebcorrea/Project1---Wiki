@@ -8,66 +8,35 @@
 {% block body %}
 
 <style>
-    form {border: 2px solid #330066;}
-
-    textarea[type=text] {
-       width:100%;
-       margin: 8px 0;
-
+  input[type=text] {
+       width: 250px;
+       margin: 10px 0;
     }
 
-    input[type=text] {
-       width: 150px;
-       padding: 12px 20px;
-       margin: 8px 0;
-       width:60px;
-       display: inline-block;
+  textarea[type=text] {
+       margin: 10px 0;
+       rows="15";
+       cols="60";
+
     }
-
-
-
-    button[type=submit]{
-       background-color: #330066;
-       color: white;
-       padding: 12px 20px;
-       margin: 8px 0;
-       border: none;
-       cursor: pointer;
-       width: 100px;
-       display: inline-block;
-     }
-
-     button[type=cancelbtnbutton]{
-        background-color: red;
-        color: white;
-        padding: 12px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 100px;
-        display: inline-block;
-      }
-
-
-
-    button:hover {
-       opacity: 0.8;
-    }
-
 
 </style>
 
 
-<div class ="flex-container" action = "{{ url_for('NewPage')}}" >
+<div class ="flex-container" action= "{{ url_for('NewPage')}}" >
     <form  method="post">
-        <label for="NewTitle"><b>Research Title Name</b></label>
-        <input type="text" class="form-control"  id="NewTitle" name="NewTitle" placeholder="Choose a short Title for research" required  >
-        <form class="form-inline">
-             <label for="NewItem"><b>Your New Encyclopedia Item </b></label><br>
-             <textarea class="form-control" id="NewItem" name="NewItem" placeholder="Place here your information" required ></textarea>
+        <br><br>
+        <label for="NewTitle"><b>Research Title Name :</b></label>
+        <input type="text" class="form-control" id="NewTitle" name="NewTitle" placeholder="Choose a short Title for research" required>
 
-             <button type="submit" >Post</button>
-             <button type="cancelbtnbutton" class="cancelbtn" id="cancel" onclick="goHome()"  width="100px;">Cancel
+        <br><br>
+        <label for="NewItem"><b>Your New Encyclopedia Item :</b></label>
+        <textarea type="text" class="form-control" id="NewItem" name="NewItem" placeholder="Place here your information" required ></textarea>
+
+        <br><br>
+        <form class="form-inline">
+             <button type="button" class="btn btn-success">Post</button>
+             <button type="button" class="btn btn-danger" onclick="goHome()"  width="100px;">Cancel</button>
         </form>
     </form>
 </div>
