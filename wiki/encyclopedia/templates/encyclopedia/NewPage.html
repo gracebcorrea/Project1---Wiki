@@ -2,21 +2,22 @@
 
 {% block title %}
     New Page
-    <p>  {{message}} </p>
+
 {% endblock %}
 
 {% block body %}
 
 <style>
   input[type=text] {
-       width: 250px;
-       margin: 10px 0;
+       width: 200px;
+       margin: 30px 0;
     }
 
   textarea[type=text] {
-       margin: 10px 0;
-       rows="15";
-       cols="60";
+       margin: 30px 0;
+       width:90%
+      /* rows="10";
+       cols="30";*/
 
     }
 
@@ -24,27 +25,28 @@
 
 
 <div class ="flex-container"  >
-    <form  action= "{% url 'encyclopedia:NewPage' %}" method="post">
-        <br><br>
+    <form  action= "{% url 'NewPage' %}" method="post">
+        <br>
         <label for="NewTitle"><b>Research Title Name :</b></label>
-        <input type="text" class="form-control" id="NewTitle" name="NewTitle" placeholder="Choose a short Title for research" required>
+        <p>Please choose a word to tag your Item.<p>
+        <input type="text" class="form-control" id="NewTitle" name="NewTitle" placeholder="Title for research" required>
 
-        <br><br>
+        <br>
         <label for="NewItem"><b>Your New Encyclopedia Item :</b></label>
         <textarea type="text" class="form-control" id="NewItem" name="NewItem" placeholder="Place here your information" required ></textarea>
 
-        <br><br>
+        <br>
         <form class="form-inline">
              <button type="button" class="btn btn-success">Post</button>
-             <button type="button" class="btn btn-danger" onclick="goHome()"  width="100px;">Cancel</button>
+             <button type="button" class="btn btn-danger" onclick="goback()">Cancel</button>
         </form>
     </form>
 </div>
 
 <script>
-    function goHome()
+    function goback()
        {
-        window.location.replace("index");
+         window.history.back();
        }
 </script>
 {% endblock %}
