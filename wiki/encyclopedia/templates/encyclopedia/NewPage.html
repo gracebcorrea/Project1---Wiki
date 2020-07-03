@@ -23,8 +23,8 @@
 </style>
 
 
-<div class ="flex-container" action= "{{ url_for('NewPage')}}" >
-    <form  method="post">
+<div class ="flex-container"  >
+    <form  action= "{% url 'encyclopedia:NewPage' %}" method="post">
         <br><br>
         <label for="NewTitle"><b>Research Title Name :</b></label>
         <input type="text" class="form-control" id="NewTitle" name="NewTitle" placeholder="Choose a short Title for research" required>
