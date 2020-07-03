@@ -19,11 +19,6 @@ def index(request):
     })
 
 
-
-def AlertsDjango(request):
-    return render(request, "encyclopedia/AlertsDjango.html",{"message":"Alerts"})
-
-
 #New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create a new encyclopedia entry.
 #Users should be able to enter a title for the page and, in a textarea, should be able to enter the Markdown content for the page.
 #Users should be able to click a button to save their new page.
@@ -31,6 +26,10 @@ def AlertsDjango(request):
 #Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
 
 def NewPage(request):
+    
+
+
+
     if request.method == "GET":
         return HttpResponse("Error. Wrong request method for New Page")
     else:
@@ -86,3 +85,9 @@ def Entries(request):
 #Clicking on any of the entry names on the search results page should take the user to that entry’s page.
 def Search():
     return ("EntryPage.html")
+
+
+
+
+def AlertsDjango(request):
+    return render(request, "encyclopedia/AlertsDjango.html",{"tipo":"Alert"})
