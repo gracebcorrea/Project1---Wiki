@@ -30,12 +30,13 @@ def index(request):
 def NewPage(request):
     if request.method == "POST":
         title = request.POST["NewTitle"]
-        content =request.POST["NewItem"]
+        content = request.POST["NewItem"]
+        print(title, content)
         return render(request, "encyclopedia/index.html", {"entries":util.save_entry(title, content)})
     else:
         return render(request, "encyclopedia/NewPage.html")
 
-        
+
 #Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
 
 def RandomPage(request):
