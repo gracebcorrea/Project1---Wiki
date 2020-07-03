@@ -11,6 +11,11 @@
   function Myredirect() {
       window.location.assign("{{NewUrl}}");
   }
+
+  function MyAlerts({{message}}){
+      var Alert = {{message}}
+      alert(Alert);
+    }
 </script>
 
 <style>
@@ -80,10 +85,10 @@ img {
     <p> <img class="rouded-circle"   src="static/avatar.jpg" alt="My avatar" style="width:300px;">  </p>
 {% endif %}
 
+{% if tipo == "Alert" %}
+        {{message}}
 
-
-
-
+{% endif %}
 
 
 
