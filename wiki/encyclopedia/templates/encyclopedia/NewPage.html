@@ -17,7 +17,7 @@
     }
 
     input[type=text] {
-       width: 70px;
+       width: 150px;
        padding: 12px 20px;
        margin: 8px 0;
        width:60px;
@@ -60,17 +60,22 @@
 
 <div class ="flex-container" action = "{{ url_for('NewPage')}}" >
     <form  method="post">
-        <label for="NewItem"><b>Your New Encyclopedia Item </b></label><br>
-        <textarea class="form-control" id="NewItem" name="NewItem" placeholder="Place here your information" required ></textarea>
+        <label for="NewTitle"><b>Research Title Name</b></label>
+        <input type="text" class="form-control"  id="NewTitle" name="NewTitle" placeholder="Choose a short Title for research" required  >
         <form class="form-inline">
-            <label for="NewTitle"><b>From 1 to 5 how much did you like the book ?</b></label>
-            <input type="text" class="form-control"  id="NewTitle" name="NewTitle" placeholder="Choose a short Title for researc" required  >
-            <button type="submit" >Post</button>
-        </form>
-        <button type="cancelbtnbutton" class="cancelbtn" id="cancel" onclick=gosearch()  width="100px;">Cancel
+             <label for="NewItem"><b>Your New Encyclopedia Item </b></label><br>
+             <textarea class="form-control" id="NewItem" name="NewItem" placeholder="Place here your information" required ></textarea>
 
+             <button type="submit" >Post</button>
+             <button type="cancelbtnbutton" class="cancelbtn" id="cancel" onclick="goHome()"  width="100px;">Cancel
+        </form>
     </form>
 </div>
 
-
+<script>
+    function goHome()
+       {
+        window.location.replace("index");
+       }
+</script>
 {% endblock %}
