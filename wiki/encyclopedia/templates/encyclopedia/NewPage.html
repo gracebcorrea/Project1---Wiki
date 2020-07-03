@@ -2,9 +2,75 @@
 
 {% block title %}
     New Page
+    <p>  {{message}} </p>
 {% endblock %}
 
 {% block body %}
-      {{message}}
+
+<style>
+    form {border: 2px solid #330066;}
+
+    textarea[type=text] {
+       width:100%;
+       margin: 8px 0;
+
+    }
+
+    input[type=text] {
+       width: 70px;
+       padding: 12px 20px;
+       margin: 8px 0;
+       width:60px;
+       display: inline-block;
+    }
+
+
+
+    button[type=submit]{
+       background-color: #330066;
+       color: white;
+       padding: 12px 20px;
+       margin: 8px 0;
+       border: none;
+       cursor: pointer;
+       width: 100px;
+       display: inline-block;
+     }
+
+     button[type=cancelbtnbutton]{
+        background-color: red;
+        color: white;
+        padding: 12px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100px;
+        display: inline-block;
+      }
+
+
+
+    button:hover {
+       opacity: 0.8;
+    }
+
+
+</style>
+
+
+<div class ="flex-container" action = "{{ url_for('NewPage')}}" >
+    <form  method="post">
+        <label for="NewItem"><b>Your New Encyclopedia Item </b></label><br>
+        <textarea class="form-control" id="NewItem" name="NewItem" placeholder="Place here your information" required ></textarea>
+        <form class="form-inline">
+            <label for="NewTitle"><b>From 1 to 5 how much did you like the book ?</b></label>
+            <input type="text" class="form-control"  id="NewTitle" name="NewTitle" placeholder="Choose a short Title for researc" required  >
+            <button type="submit" >Post</button>
+        </form>
+        <button type="cancelbtnbutton" class="cancelbtn" id="cancel" onclick=gosearch()  width="100px;">Cancel
+
+    </form>
+</div>
+
 
 {% endblock %}
