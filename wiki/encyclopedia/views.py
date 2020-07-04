@@ -23,22 +23,7 @@ def index(request):
         "encyclopedia": request.session["Pwiki"]
     })
 
-#Show New Files
-def Entries(request):
-    if request.method == "POST":
-        form = NewEntryForm(request.POST)
-        if form.is_valid():
-            entry = form.cleaned_data["entry"]
-            request.session["Pwiki"] += [entry]
-            return HttpResponseRedirect(reverse("entries:index"))
-        else:
-            return render(request, "entries/index.html", {
-                "form": form
-            })
-    else:
-        return render(request, "entries/index.html", {
-            "form": NewEntryForm()
-        })
+
 
 
 
@@ -47,8 +32,10 @@ def Entries(request):
 #Users should be able to enter a title for the page and, in a textarea, should be able to enter the
 #Markdown content for the page.
 #Users should be able to click a button to save their new page.
-#When the page is saved, if an encyclopedia entry already exists with the provided title, the user should be presented with an error message.
-#Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
+#When the page is saved, if an encyclopedia entry already exists with the provided title, the user should
+# be presented with an error message.
+#Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s
+#page.
 
 def NewPage(request):
     if request.method == "POST":
@@ -59,13 +46,34 @@ def NewPage(request):
 
         return render(request,"encyclopedia/index.html",{
              "entries":util.save_entry(title=title, content=content),
-             "entries":incluir_linha(nome_arquivo=f"entries/{title}.md", numero_linha= 1, conteudo=rastag),
+             "entries":insert_line(file_name=f"entries/{title}.md", line_number= 1, conteudo=rastag),
              "entries": util.list_entries(),
              "encyclopedia": request.session["Pwiki"]
         })
     else:
-        print(f"Não entrei no post")
+        print(f"Nao entrei no post")
         return render(request, "encyclopedia/NewPage.html")
+
+
+#Search: Allow the user to type a query into the search box in the sidebar to search
+#for an encyclopedia entry.
+#If the query matches the name of an encyclopedia entry, the user should be redirected
+#to that entry’s page.
+#If the query does not match the name of an encyclopedia entry, the user should instead
+#be taken to a search results page that displays a list of all encyclopedia entries that
+#have the query as a substring. For example, if the search query were Py, then Python 
+#should appear in the search results.
+#Clicking on any of the entry names on the search results page should take the user to that entry’s page.
+def Search(request):
+    if request.method == "POST":
+        print(f"Entrei no post do Search")
+        title = request.POST["q"]
+
+    return render(request, "encyclopedia/EntryPage.html", {
+        "entries": util.get_entry(title = title) })
+
+
+
 
 
 #Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
@@ -96,29 +104,39 @@ def EditPage(request):
 
 
 
-#Search: Allow the user to type a query into the search box in the sidebar to search for an encyclopedia entry.
-#If the query matches the name of an encyclopedia entry, the user should be redirected to that entry’s page.
-#If the query does not match the name of an encyclopedia entry, the user should instead be taken to a search results page that displays a list of all encyclopedia entries that have the query as a substring. For example, if the search query were Py, then Python should appear in the search results.
-#Clicking on any of the entry names on the search results page should take the user to that entry’s page.
-def Search():
-    return ("EntryPage.html")
+
 
 #insert text on the file in any line
-def incluir_linha(nome_arquivo, numero_linha, conteudo):
-    with open(nome_arquivo) as orig, \
+def insert_line(file_name, line_number, conteudo):
+    with open(file_name) as orig, \
          tempfile.NamedTemporaryFile('w', delete=False) as out:
         for i, line in enumerate(orig): # percorre o arquivo linha a linha
-            if i == numero_linha - 1:
+            if i == line_number - 1:
                 out.write(f'{conteudo}\n')
             out.write(line)
 
 
-    shutil.move(out.name, nome_arquivo)
-    
+    shutil.move(out.name, file_name)
+    # incluir o texto "xyz" na terceira linha do arquivo
+    #insert_line('arquivo.txt', 3, 'xyz')
 
-# incluir o texto "xyz" na terceira linha do arquivo
-#incluir_linha('arquivo.txt', 3, 'xyz')
 
+#Show New Files
+def Entries(request):
+    if request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            entry = form.cleaned_data["entry"]
+            request.session["Pwiki"] += [entry]
+            return HttpResponseRedirect(reverse("entries:index"))
+        else:
+            return render(request, "entries/index.html", {
+                "form": form
+            })
+    else:
+        return render(request, "entries/index.html", {
+            "form": NewEntryForm()
+        })
 
 
 def AlertsDjango(request):
