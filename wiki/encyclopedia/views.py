@@ -47,14 +47,15 @@ def Entries(request):
 #Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
 
 def NewPage(request):
-    print(f"Estou em newpage")
     if request.method == "POST":
         print(f"Entrei no post do New Page")
         title = request.POST["NewTitle"]
         content = request.POST["NewContent"]
 
+
         return render(request,"encyclopedia/index.html",{
              "entries":util.save_entry(title=title, content=content),
+             "entries":insert_rastag(title=title),
              "encyclopedia": request.session["Pwiki"]
         })
     else:
@@ -98,7 +99,17 @@ def Search():
     return ("EntryPage.html")
 
 
-
+def insert_rastag(title):
+    """
+    Insert the #title on the file
+    """
+    try:
+        file= title +".md"
+        f = open(file, "a")
+        f.write("#"+title)
+        f.close()
+    except Exception as e:
+        return HttpResponse("could not insert rastag")
 
 def AlertsDjango(request):
     return render(request, "encyclopedia/AlertsDjango.html",{"tipo":"Alert"})
