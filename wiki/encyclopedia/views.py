@@ -33,7 +33,7 @@ def NewPage(request):
     if request.method == "POST":
         print(f"Entrei no post do New Page")
         title = request.POST["NewTitle"]
-        content = request.POST["NewItem"]
+        content = request.POST["NewContent"]
 
         request.session["Pwiki"] += [Pwiki]
         print([title], [content])
@@ -42,6 +42,7 @@ def NewPage(request):
              "encyclopedia": request.session["Pwiki"]
         }))
     else:
+        print(f"Não entrei no post")
         return render(request, "encyclopedia/NewPage.html")
 
 
