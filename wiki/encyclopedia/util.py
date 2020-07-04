@@ -22,6 +22,7 @@ def save_entry(title, content):
     filename = f"entries/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
+
     default_storage.save(filename, ContentFile(content))
 
 
