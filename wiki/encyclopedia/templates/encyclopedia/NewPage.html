@@ -26,6 +26,8 @@
 
 <div class ="flex-container"  >
     <form  action= "{% url 'encyclopedia:NewPage' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
         <br>
         <label for="NewTitle"><b>Research Title Name :</b></label>
         <p>Please choose a word to tag your Item.<p>
