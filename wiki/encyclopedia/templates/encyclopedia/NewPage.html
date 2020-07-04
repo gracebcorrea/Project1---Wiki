@@ -32,12 +32,12 @@
         <input type="text" class="form-control" id="NewTitle" name="NewTitle" placeholder="Title for research" required>
 
         <br>
-        <label for="NewItem"><b>Your New Encyclopedia Item :</b></label>
+        <label for="NewContent"><b>Your New Encyclopedia Item :</b></label>
         <textarea type="text" class="form-control" id="NewContent" name="NewContent" placeholder="Place here your information" required ></textarea>
 
         <br>
         <form class="form-inline">
-             <button type="button" class="btn btn-success">Post</button>
+             <button type="submit" class="btn btn-success"><a href="{% url 'encyclopedia:index' %}">Post</button>
              <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
         </form>
     </form>
