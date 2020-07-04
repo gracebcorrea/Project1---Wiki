@@ -1,9 +1,13 @@
+import shutil, tempfile
+
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from . import util
+
+
 
 class NewEntryForm(forms.Form):
     title = forms.CharField(label="NewTitle")
@@ -51,11 +55,11 @@ def NewPage(request):
         print(f"Entrei no post do New Page")
         title = request.POST["NewTitle"]
         content = request.POST["NewContent"]
-
+        rastag = "# "+title
 
         return render(request,"encyclopedia/index.html",{
              "entries":util.save_entry(title=title, content=content),
-             "entries":insert_rastag(title=title),
+             "entries":incluir_linha(nome_arquivo=f"entries/{title}.md", numero_linha= 1, conteudo=rastag),
              "encyclopedia": request.session["Pwiki"]
         })
     else:
@@ -99,16 +103,19 @@ def Search():
     return ("EntryPage.html")
 
 
-def insert_rastag (title, content):
-    filename = f"entries/{title}.md"
-    my_file = open(filename, "w")
-    Oldcontent = my_file.read()
-    my_file.write("#"+title)  #primeira linha
-    my_file.write(Oldcontent ) #outras linhas
-    my_file = open(filename)
-    my_file.close()
+def incluir_linha(nome_arquivo, numero_linha, conteudo):
+    with open(nome_arquivo) as orig, \
+         tempfile.NamedTemporaryFile('w', delete=False) as out:
+        for i, line in enumerate(orig): # percorre o arquivo linha a linha
+            if i == numero_linha - 1:
+                out.write(f'{conteudo}\n')
+            out.write(line)
 
-    
+    shutil.move(out.name, nome_arquivo)
+
+# incluir o texto "xyz" na terceira linha do arquivo
+#incluir_linha('arquivo.txt', 3, 'xyz')
+
 
 
 def AlertsDjango(request):
