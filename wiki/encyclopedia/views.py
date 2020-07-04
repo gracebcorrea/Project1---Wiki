@@ -37,11 +37,11 @@ def NewPage(request):
 
             request.session["Pwiki"] += [Pwiki]
             print([title], [content])
-
-            return render(request, "encyclopedia/index.html", {
-                "entries":util.save_entry(title, content),
-                "encyclopedia": request.session["Pwiki"]
+            return HttpResponseRedirect(reverse("index",{
+                 "entries":util.save_entry(title, content),
+                 "encyclopedia": request.session["Pwiki"]
             })
+
     else:
         return render(request, "encyclopedia/NewPage.html")
 
