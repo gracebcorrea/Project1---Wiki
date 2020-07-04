@@ -60,6 +60,7 @@ def NewPage(request):
         return render(request,"encyclopedia/index.html",{
              "entries":util.save_entry(title=title, content=content),
              "entries":incluir_linha(nome_arquivo=f"entries/{title}.md", numero_linha= 1, conteudo=rastag),
+             "entries": util.list_entries(),
              "encyclopedia": request.session["Pwiki"]
         })
     else:
@@ -102,7 +103,7 @@ def EditPage(request):
 def Search():
     return ("EntryPage.html")
 
-
+#insert text on the file in any line
 def incluir_linha(nome_arquivo, numero_linha, conteudo):
     with open(nome_arquivo) as orig, \
          tempfile.NamedTemporaryFile('w', delete=False) as out:
@@ -111,7 +112,9 @@ def incluir_linha(nome_arquivo, numero_linha, conteudo):
                 out.write(f'{conteudo}\n')
             out.write(line)
 
+
     shutil.move(out.name, nome_arquivo)
+    
 
 # incluir o texto "xyz" na terceira linha do arquivo
 #incluir_linha('arquivo.txt', 3, 'xyz')
