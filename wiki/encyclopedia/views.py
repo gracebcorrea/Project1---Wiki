@@ -99,17 +99,17 @@ def Search():
     return ("EntryPage.html")
 
 
-def insert_rastag(title):
-    """
-    Insert the #title on the file
-    """
-    try:
-        file= title +".md"
-        f = open(file, "a")
-        f.write("#"+title)
-        f.close()
-    except Exception as e:
-        return HttpResponse("could not insert rastag")
+def insert_rastag (title, content):
+    filename = f"entries/{title}.md"
+    my_file = open(filename, "w")
+    Oldcontent = my_file.read()
+    my_file.write("#"+title)  #primeira linha
+    my_file.write(Oldcontent ) #outras linhas
+    my_file = open(filename)
+    my_file.close()
+
+    
+
 
 def AlertsDjango(request):
     return render(request, "encyclopedia/AlertsDjango.html",{"tipo":"Alert"})
