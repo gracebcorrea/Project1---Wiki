@@ -1,7 +1,7 @@
 {% extends "encyclopedia/layout.html" %}
 . The title of the page should include the name of the entry.
 {% block title %}
-    Entry Page
+    Entry Page for : {{title}}
 {% endblock %}
 
 {% block body %}
@@ -13,5 +13,9 @@ should render a page that displays the contents of that encyclopedia entry.
 indicating that their requested page was not found.
    If the entry does exist, the user should be presented with a page that displays the content of
 the entry</p>
+
+{{content}}
+
+
 
 {% endblock %}
