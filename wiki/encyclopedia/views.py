@@ -29,19 +29,18 @@ def index(request):
 #Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
 
 def NewPage(request):
+    Print("Estou em newpage")
     if request.method == "POST":
-        form = NewEntryForm(request.POST)
-        if form.is_valid():
-            title = request.POST["NewTitle"]
-            content = request.POST["NewItem"]
+        print("Entrei no post do New Page")
+        title = request.POST["NewTitle"]
+        content = request.POST["NewItem"]
 
-            request.session["Pwiki"] += [Pwiki]
-            print([title], [content])
-            return HttpResponseRedirect(reverse("index",{
-                 "entries":util.save_entry(title, content),
-                 "encyclopedia": request.session["Pwiki"]
-            })
-
+        request.session["Pwiki"] += [Pwiki]
+        print([title], [content])
+        return HttpResponseRedirect(reverse("index",{
+             "entries":util.save_entry(title, content),
+             "encyclopedia": request.session["Pwiki"]
+        }))
     else:
         return render(request, "encyclopedia/NewPage.html")
 
