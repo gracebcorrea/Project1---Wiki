@@ -29,9 +29,9 @@ def index(request):
 #Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
 
 def NewPage(request):
-    Print("Estou em newpage")
+    print(f"Estou em newpage")
     if request.method == "POST":
-        print("Entrei no post do New Page")
+        print(f"Entrei no post do New Page")
         title = request.POST["NewTitle"]
         content = request.POST["NewItem"]
 
