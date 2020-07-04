@@ -53,10 +53,10 @@ def NewPage(request):
         title = request.POST["NewTitle"]
         content = request.POST["NewContent"]
 
-        return HttpResponseRedirect(reverse("encyclopedia:index",{
+        return render(request,"encyclopedia/index.html",{
              "entries":util.save_entry(title=title, content=content),
              "encyclopedia": request.session["Pwiki"]
-        }))
+        })
     else:
         print(f"Não entrei no post")
         return render(request, "encyclopedia/NewPage.html")
