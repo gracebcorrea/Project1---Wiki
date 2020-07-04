@@ -9,7 +9,7 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="NewTitle")
     content = forms.CharField(label="NewContent")
 
-
+#Index Page
 def index(request):
     if "Pwiki" not in request.session:
         request.session["Pwiki"] = []
@@ -18,6 +18,24 @@ def index(request):
         "entries": util.list_entries() ,
         "encyclopedia": request.session["Pwiki"]
     })
+
+#Show New Files
+def Entries(request):
+    if request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            entry = form.cleaned_data["entry"]
+            request.session["Pwiki"] += [entry]
+            return HttpResponseRedirect(reverse("entries:index"))
+        else:
+            return render(request, "entries/index.html", {
+                "form": form
+            })
+    else:
+        return render(request, "entries/index.html", {
+            "form": NewEntryForm()
+        })
+
 
 
 #New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create
@@ -35,10 +53,8 @@ def NewPage(request):
         title = request.POST["NewTitle"]
         content = request.POST["NewContent"]
 
-        request.session["Pwiki"] += [Pwiki]
-        print([title], [content])
-        return HttpResponseRedirect(reverse("index",{
-             "entries":util.save_entry(title, content),
+        return HttpResponseRedirect(reverse("encyclopedia:index",{
+             "entries":util.save_entry(title=title, content=content),
              "encyclopedia": request.session["Pwiki"]
         }))
     else:
@@ -72,22 +88,6 @@ def EntryPage(request):
 def EditPage(request):
     return (request, "encyclopedia/EditPage.html",{"message":"Edit Page"})
 
-#New Files
-def Entries(request):
-    if request.method == "POST":
-        form = NewEntryForm(request.POST)
-        if form.is_valid():
-            entry = form.cleaned_data["entry"]
-            request.session["entries"] += [entry]
-            return HttpResponseRedirect(reverse("entries:index"))
-        else:
-            return render(request, "entries/index.html", {
-                "form": form
-            })
-    else:
-        return render(request, "entries/index.html", {
-            "form": NewEntryForm()
-        })
 
 
 #Search: Allow the user to type a query into the search box in the sidebar to search for an encyclopedia entry.
