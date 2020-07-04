@@ -6,7 +6,8 @@ from django.urls import reverse
 from . import util
 
 class NewEntryForm(forms.Form):
-    entry = forms.CharField(label="New Entry")
+    title = forms.CharField(label="NewTitle")
+    content = forms.CharField(label="NewContent")
 
 
 def index(request):
@@ -29,10 +30,18 @@ def index(request):
 
 def NewPage(request):
     if request.method == "POST":
-        title = request.POST["NewTitle"]
-        content = request.POST["NewItem"]
-        print(title, content)
-        return render(request, "encyclopedia/index.html", {"entries":util.save_entry(title, content)})
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            title = request.POST["NewTitle"]
+            content = request.POST["NewItem"]
+
+            request.session["Pwiki"] += [Pwiki]
+            print([title], [content])
+
+            return render(request, "encyclopedia/index.html", {
+                "entries":util.save_entry(title, content),
+                "encyclopedia": request.session["Pwiki"]
+            })
     else:
         return render(request, "encyclopedia/NewPage.html")
 
