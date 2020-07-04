@@ -1,4 +1,4 @@
-import shutil, tempfile
+import shutil, tempfile, os
 
 from django.shortcuts import render
 from django import forms
@@ -61,13 +61,16 @@ def NewPage(request):
 #to that entry’s page.
 #If the query does not match the name of an encyclopedia entry, the user should instead
 #be taken to a search results page that displays a list of all encyclopedia entries that
-#have the query as a substring. For example, if the search query were Py, then Python 
+#have the query as a substring. For example, if the search query were Py, then Python
 #should appear in the search results.
 #Clicking on any of the entry names on the search results page should take the user to that entry’s page.
 def Search(request):
     if request.method == "POST":
         print(f"Entrei no post do Search")
-        title = request.POST["q"]
+        title = "%"+request.POST["q"]+"%"
+
+
+
 
     return render(request, "encyclopedia/EntryPage.html", {
         "entries": util.get_entry(title = title) })
