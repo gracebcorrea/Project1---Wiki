@@ -69,18 +69,23 @@ def Search(request):
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
 
-        #search directoty, count Files
-        list = os.listdir("entries")
-        number_files = len("entries")
-        for 0 to number_files:
-            print([number_files])
-            filename =
-            #search word in file
-            for lin in open(filename):
-                 if seekword in lin:
-                    return(lin)
-                    return render(request, "encyclopedia/EntryPage.html", {
+        _, filenames = default_storage.listdir("entries")
+        for filename in filenames:
+            arquivo = filename     # "recebe o nome do arquivo e abre"
+            with open(arquivo, "r") as file:
+                 arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
+                 title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                 for lin in lines:
+                     arquivo.readline()
+                     if seekword in lin:
+                        return render(request, "encyclopedia/EntryPage.html", {
                            "entries": util.get_entry(title = seekword) })
+
+
+        #if doesnotexist
+        #   raise Http404("this topic does not exist")
+
+
 
     else:
         return render(request, "encyclopedia/EntryPage.html")
@@ -134,6 +139,7 @@ def insert_line(file_name, line_number, conteudo):
         for i, line in enumerate(orig): # percorre o arquivo linha a linha
             if i == line_number - 1:
                 out.write(f'{conteudo}\n')
+                out.write(f'\n')
             out.write(line)
 
 
