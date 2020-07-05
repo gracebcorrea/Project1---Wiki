@@ -1,4 +1,4 @@
-import shutil, tempfile, os
+import shutil, tempfile, os, os.path
 
 from django.shortcuts import render
 from django import forms
@@ -66,16 +66,24 @@ def NewPage(request):
 #Clicking on any of the entry names on the search results page should take the user to that entry’s page.
 def Search(request):
     if request.method == "POST":
-        print(f"Entrei no post do Search")
-        title = "%"+request.POST["q"]+"%"
+        seekword = "%"+request.POST["q"]+"%"
+        print(f"Entrei no post do Search" , [seekword])
 
+        #search directoty, count Files
+        list = os.listdir("entries")
+        number_files = len("entries")
+        for 0 to number_files:
+            print([number_files])
+            filename = 
+            #search word in file
+            for lin in open(filename):
+                 if seekword in lin:
+                    return(lin)
+                    return render(request, "encyclopedia/EntryPage.html", {
+                           "entries": util.get_entry(title = seekword) })
 
-
-
-    return render(request, "encyclopedia/EntryPage.html", {
-        "entries": util.get_entry(title = title) })
-
-
+    else:
+        return render(request, "encyclopedia/EntryPage.html")
 
 
 
