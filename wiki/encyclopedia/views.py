@@ -74,7 +74,7 @@ def Search(request):
         number_files = len("entries")
         for 0 to number_files:
             print([number_files])
-            filename = 
+            filename =
             #search word in file
             for lin in open(filename):
                  if seekword in lin:
@@ -95,12 +95,22 @@ def RandomPage(request):
     else:
         return HttpResponseRedirect(reverse("RandomPage"))
 
+
+#Entry Page: Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry,
+#should render a page that displays the contents of that encyclopedia entry.
+#   The view should get the content of the encyclopedia entry by calling the appropriate util function.
+#   If an entry is requested that does not exist, the user should be presented with an error page
+#indicating that their requested page was not found.
+#   If the entry does exist, the user should be presented with a page that displays the content of
+#the entry
+
 #Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
 #converted to HTML before being displayed to the user. You may use the python-markdown2 package
 #to perform this conversion, installable via pip3 install markdown2.
 #Challenge for those more comfortable: If you’re feeling more comfortable, try implementing the
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
+
 def EntryPage(request):
     return (request, "encyclopedia/EntryPage.html",{"message":"Entry Page"})
 
