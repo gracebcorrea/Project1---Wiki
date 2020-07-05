@@ -19,7 +19,7 @@
 </form>
 {%endif%}
 
-{%if tipo == "Entry"%}
+{%if tipo == "EntryPage"%}
 <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
       {% csrf_token %}
       {{ form }}
