@@ -68,25 +68,22 @@ def Search(request):
     if request.method == "POST":
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
-
+        count = 0
         _, filenames = default_storage.listdir("entries")
         for filename in filenames:
             arquivo = filename     # "recebe o nome do arquivo e abre"
             with open(arquivo, "r") as file:
-                 arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
-                 title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                 for lin in lines:
-                     arquivo.readline()
-                     if seekword in lin:
-                        return render(request, "encyclopedia/EntryPage.html", {
-                           "entries": util.get_entry(title = seekword) })
+                title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
+                lines = arquivo.read()
+                if find(seekword) in lines:
+                    count =+ 1
+                    return render(request, "encyclopedia/EntryPage.html", {
+                           "entries": util.get_entry(title = title) })
 
-
-        #if doesnotexist
-        #   raise Http404("this topic does not exist")
-
-
-
+        if count == 0:
+            #if doesnotexist
+            raise Http404("this topic does not exist")
     else:
         return render(request, "encyclopedia/EntryPage.html")
 
@@ -117,6 +114,8 @@ def RandomPage(request):
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
 def EntryPage(request):
+
+    get_entry(title)
     return (request, "encyclopedia/EntryPage.html",{"message":"Entry Page"})
 
 
