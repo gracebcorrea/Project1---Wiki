@@ -7,7 +7,7 @@
 {% block body %}
 
 
-
+{%if tipo == "Search"%}
 <form action="{% url 'encyclopedia:Search' %}" method="post">
       {% csrf_token %}
       {{ form }}
@@ -17,7 +17,9 @@
           <li>No content.</li>
       {% endfor %}
 </form>
+{%endif%}
 
+{%if tipo == "Entry"%}
 <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
       {% csrf_token %}
       {{ form }}
@@ -27,7 +29,7 @@
           <li>No content.</li>
       {% endfor %}
 </form>
-
+{%endif%}
 
 
 {% endblock %}
