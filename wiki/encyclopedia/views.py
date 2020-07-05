@@ -117,18 +117,22 @@ def RandomPage(request):
 def EntryPage(request):
     if request.method == "POST":
         try:
-           print(f"Entrei no post do Entry Page")
            title = request.POST["entry"]
-           return render(request, "encyclopedia/EntryPage.html", {
-               "entries": util.get_entry(title = title)}, tipo = "EntryPage")
+           name = "wiki/"[title]
+
+           return render(request, "encyclopedia/EntryPage.html",
+                  {"name": name,
+                  "entries": util.get_entry(title),
+
+                  }, tipo = "ListEntry")
+
         except:
             raise Http404("this topic does not exist")
 
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries() ,
-            "encyclopedia": request.session["Pwiki"],
-            "name":"wiki/":title
+            "encyclopedia": request.session["Pwiki"]
         })
 
 
