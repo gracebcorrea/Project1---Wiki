@@ -10,5 +10,6 @@ urlpatterns = [
     path("RandomPage", views.RandomPage, name="RandomPage"),
     path("EntryPage", views.EntryPage, name="EntryPage"),
     path("EditPage", views.EditPage, name="EditPage"),
-    
+    path("Search", views.Search, name="Search")
+
 ]
