@@ -115,9 +115,21 @@ def RandomPage(request):
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
 def EntryPage(request):
+    if request.method == "POST":
+        try:
+           print(f"Entrei no post do Entry Page")
+           title = request.POST["entry"]
+           return render(request, "encyclopedia/EntryPage.html", {
+               "entries": util.get_entry(title = title)}, tipo = "EntryPage")
+        except:
+            raise Http404("this topic does not exist")
 
-    get_entry(title)
-    return (request, "encyclopedia/EntryPage.html",{"message":"Entry Page"})
+    else:
+        return render(request, "encyclopedia/index.html", {
+            "entries": util.list_entries() ,
+            "encyclopedia": request.session["Pwiki"],
+            "name":"wiki/":title
+        })
 
 
 #Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
