@@ -78,8 +78,9 @@ def Search(request):
                 lines = arquivo.read()
                 if find(seekword) in lines:
                     count =+ 1
+                    print(f"achei", [count])
                     return render(request, "encyclopedia/EntryPage.html", {
-                           "entries": util.get_entry(title = title) })
+                           "entries": util.get_entry(title = title)}, tipo = "Search")
 
         if count == 0:
             #if doesnotexist
