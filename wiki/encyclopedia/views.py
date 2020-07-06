@@ -3,7 +3,7 @@ import shutil, tempfile, os, os.path
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, path
 
 from . import util
 
@@ -54,18 +54,20 @@ def NewPage(request):
         print(f"Nao entrei no post")
         return render(request, "encyclopedia/NewPage.html")
 
+"""
+Search: Allow the user to type a query into the search box in the sidebar to search
+for an encyclopedia entry.
+If the query matches the name of an encyclopedia entry, the user should be redirected
+to that entry’s page.
+If the query does not match the name of an encyclopedia entry, the user should instead
+be taken to a search results page that displays a list of all encyclopedia entries that
+have the query as a substring. For example, if the search query were Py, then Python
+should appear in the search results.
+Clicking on any of the entry names on the search results page should take the user to that entry’s page.
+"""
 
-#Search: Allow the user to type a query into the search box in the sidebar to search
-#for an encyclopedia entry.
-#If the query matches the name of an encyclopedia entry, the user should be redirected
-#to that entry’s page.
-#If the query does not match the name of an encyclopedia entry, the user should instead
-#be taken to a search results page that displays a list of all encyclopedia entries that
-#have the query as a substring. For example, if the search query were Py, then Python
-#should appear in the search results.
-#Clicking on any of the entry names on the search results page should take the user to that entry’s page.
 def Search(request):
-    if request.method == "POST":
+    """if request.method == "POST":
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
         count = 0
@@ -74,29 +76,25 @@ def Search(request):
             arquivo = filename     # "recebe o nome do arquivo e abre"
             with open(arquivo, "r") as file:
                 title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                pagename = "wiki/"[title]
+                print(pagename)
                 arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
                 lines = arquivo.read()
                 if find(seekword) in lines:
                     count =+ 1
                     print(f"achei", [count])
                     return render(request, "encyclopedia/EntryPage.html", {
-                           "entries": util.get_entry(title = title)}, tipo = "Search")
+                           "entries": util.get_entry(title = title),
+                           "form": form,
+                           "pagename" :pagename.capitalize() }, tipo = "Search" , pagename=pagename)
 
         if count == 0:
             #if doesnotexist
             raise Http404("this topic does not exist")
-    else:
-        return render(request, "encyclopedia/EntryPage.html")
+    else:"""
+    return render(request, "encyclopedia/EntryPage.html")
 
 
-
-#Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
-
-def RandomPage(request):
-    if request.method == "GET":
-        return HttpResponse("Error. Wrong request method for Random")
-    else:
-        return HttpResponseRedirect(reverse("RandomPage"))
 
 
 #Entry Page: Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry,
@@ -114,17 +112,20 @@ def RandomPage(request):
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
-def EntryPage(request):
+def EntryPage(request,name):
+    pagename=name
+    print("estou na Entrypage", pagename)
     if request.method == "POST":
+        title = request.POST["entry"]
+        pagename = "wiki/"[title]
+        print(f"Tentando abrir Entrypage")
         try:
-           title = request.POST["entry"]
-           name = "wiki/"[title]
-
            return render(request, "encyclopedia/EntryPage.html",
-                  {"name": name,
-                  "entries": util.get_entry(title),
-
-                  }, tipo = "ListEntry")
+                 {
+                  "pagename": pagename,
+                  "form": form,
+                  "entries": util.get_entry(title)
+                  }, tipo = "ListEntry",pagename=pagename, title=title)
 
         except:
             raise Http404("this topic does not exist")
@@ -135,6 +136,15 @@ def EntryPage(request):
             "encyclopedia": request.session["Pwiki"]
         })
 
+
+
+#Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
+
+def RandomPage(request):
+    if request.method == "GET":
+        return HttpResponse("Error. Wrong request method for Random")
+    else:
+        return HttpResponseRedirect(reverse("RandomPage"))
 
 #Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
 #The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
