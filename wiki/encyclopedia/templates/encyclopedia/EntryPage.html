@@ -10,29 +10,22 @@
 
 {%if tipo == "Search"%}
 <form action="{% url 'encyclopedia:Search'  %}" method="post">
-      {% csrf_token %}
-      {{ form }}
-      {% for content in contents %}
-          <li>{{title}}</li>
-          <li>{{content}}</li>
-      {% empty %}
-          <li>No content.</li>
-      {% endfor %}
-</form>
 {%endif%}
 
 {%if tipo == "ListEntry"%}
 <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
-      {% csrf_token %}
-      {{ form }}
-      {% for content in contents %}
-          <li>{{title}}</li>
-          <li>{{content}}</li>
-      {% empty %}
-          <li>No content.</li>
-      {% endfor %}
-</form>
 {%endif%}
+
+    {% csrf_token %}
+    {{ form }}
+    {% for content in contents %}
+        <li>{{title}}</li>
+        <li>{{content}}</li>
+    {% empty %}
+        <li>No content.</li>
+    {% endfor %}
+</form>
+
 
 
 {% endblock %}
