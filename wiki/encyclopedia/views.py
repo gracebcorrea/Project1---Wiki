@@ -34,12 +34,16 @@ def index(request):
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
 def EntryPage(request, entry):
-    print (entry)
-    return render(request, "encyclopedia/EntryPage.html",
-          {
 
-           "entry" : entry },
-           tipo = "ListEntry")
+    try:
+        name = request.POST["entry"]
+        return HttpResponse(f"I got it , {name.capitalize()}!")
+    except Exception as e:
+        raise Http404(f"No Entry like, {name}")
+
+
+    #print (entry)
+    #return render(request, "encyclopedia/EntryPage.html", {"name" : name.capitalize() },  tipo = "ListEntry")
 
 
 
