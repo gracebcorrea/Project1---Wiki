@@ -2,6 +2,8 @@
 
 {% block title %}
     Encyclopedia
+
+
 {% endblock %}
 
 <!--Criar link para todas as páginas -
@@ -10,14 +12,27 @@
     directly to that entry page -->
 {% block body %}
     <h1>All Pages</h1>
-    <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
+    <form action="{% url 'encyclopedia:EntryPage' pagename %}" method="post">
           {% csrf_token %}
           {{ form }}
           <ul>
            {% for entry in entries %}
-               <li><a href= 'wiki/{{ entry }}'  name='wiki/{{ entry }}'  id='wiki/{{ entry }}' >{{ entry }}</a></li>
+               <li><a href= 'wiki/{{ entry }}'  name='wiki/{{ entry }}' id='wiki/{{ entry }}' onclick="myredirec(name)" >{{ entry }}</a></li>
 
            {% endfor %}
           </ul>
     </form >
+
+    <script>
+       function  myredirec(name){
+         var pagename;
+         pagename =  name;
+         alert(pagename);
+         /*response.sendRedirect("EntryPage");*/
+          }
+    </script>
+
+
+
+
 {% endblock %}
