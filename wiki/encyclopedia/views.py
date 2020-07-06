@@ -110,8 +110,8 @@ def Search(request):
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
-def EntryPage(request):
-
+def EntryPage(request,name):
+    print(f"Achei EntryPage")
     if request.method == "POST":
         print(f"Entrei no post EntryPage")
         form = NewEntryForm(request.POST)
@@ -127,11 +127,8 @@ def EntryPage(request):
 
     else:
         print(f"Nao entrei no post EntryPage")
-        return render(request, "encyclopedia/EntryPage.html", tipo = "ListEntry",
-           {
-            "form": form,
-            "encyclopedia": request.session["Pwiki"]
-           })
+        return render(request, "encyclopedia/EntryPage.html",
+           {"encyclopedia": request.session["Pwiki"]}, tipo = "ListEntry")
 
 
 
