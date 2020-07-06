@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.redirects',
+    'django.contrib.redirects',  #new
+    'django.contrib.sites',  #new
+
 ]
+SITE_ID = 1 #new
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
