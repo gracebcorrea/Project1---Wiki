@@ -17,7 +17,7 @@
 {%endif%}
 
     {% csrf_token %}
-    {{ form }}
+  
     {% for content in contents %}
         <li>{{title}}</li>
         <li>{{content}}</li>
