@@ -33,15 +33,14 @@ def index(request):
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
-def EntryPage(request,name):
+def EntryPage(request, pagename):
 
     print(f"Achei EntryPage")
     if request.method == "POST":
         return("Entrei no post EntryPage")
     else:
         print(f"Nao entrei no post EntryPage")
-        return render(request, "encyclopedia/EntryPage.html",
-           tipo = "ListEntry")
+        return render(request, "encyclopedia/EntryPage.html",{"pagename" : pagename.capitalize() } )
 
 
     """    form = NewEntryForm(request.POST)
