@@ -12,8 +12,7 @@ urlpatterns = [
     path("EditPage", views.EditPage, name="EditPage"),
     path("EntryPage", views.EntryPage, name="EntryPage"),
     path("AlertsDjango", views.AlertsDjango, name="AlertsDjango"),
-    path("<str:pagename>", views.Search, name="EntryPage"),
-    path("<str:pagename>", views.EntryPage, name="EntryPage"),
-
+    path("wiki/<str:entry>", views.Search, name="EntryPage"),
+    path("wiki/<str:entry>", views.EntryPage, name="EntryPage"),
 
 ]
