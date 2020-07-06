@@ -12,25 +12,16 @@
     directly to that entry page -->
 {% block body %}
     <h1>All Pages</h1>
-    <form action="{% url 'encyclopedia:EntryPage' pagename %}" method="post">
-          {% csrf_token %}
-          {{ form }}
-          <ul>
-           {% for entry in entries %}
-               <li><a href= 'wiki/{{ entry }}'  name='wiki/{{ entry }}' id='wiki/{{ entry }}' onclick="myredirec(name)" >{{ entry }}</a></li>
+    <form action="{% url 'encyclopedia:index'  %}" method="post">
+        {% csrf_token %}
+        <ul>
+        {% for entry in entries %}
+             <li><a href= "{% url 'encyclopedia:EntryPage' entry  %}" id='wiki/{{ entry }}' name='wiki/{{ entry }}' >{{ entry }}</a></li>
 
-           {% endfor %}
-          </ul>
+        {% endfor %}
+        </ul>
     </form >
 
-    <script>
-       function  myredirec(name){
-         var pagename;
-         pagename =  name;
-         alert(pagename);
-         /*response.sendRedirect("EntryPage");*/
-          }
-    </script>
 
 
 
