@@ -51,7 +51,6 @@ def NewPage(request):
              "encyclopedia": request.session["Pwiki"]
         })
     else:
-        print(f"Nao entrei no post")
         return render(request, "encyclopedia/NewPage.html")
 
 """
@@ -67,6 +66,7 @@ Clicking on any of the entry names on the search results page should take the us
 """
 
 def Search(request):
+    print("estou na Search")
     """if request.method == "POST":
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
@@ -76,8 +76,6 @@ def Search(request):
             arquivo = filename     # "recebe o nome do arquivo e abre"
             with open(arquivo, "r") as file:
                 title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                pagename = "wiki/"[title]
-                print(pagename)
                 arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
                 lines = arquivo.read()
                 if find(seekword) in lines:
@@ -112,29 +110,28 @@ def Search(request):
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
-def EntryPage(request,name):
-    pagename=name
-    print("estou na Entrypage", pagename)
+def EntryPage(request):
+
     if request.method == "POST":
-        title = request.POST["entry"]
-        pagename = "wiki/"[title]
-        print(f"Tentando abrir Entrypage")
-        try:
-           return render(request, "encyclopedia/EntryPage.html",
+        print(f"Entrei no post EntryPage")
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            pagename = "wiki/"[title]
+            print(f"Tentando abrir Entrypage", [pagename])
+            return render(request, "encyclopedia/EntryPage.html",
                  {
                   "pagename": pagename,
                   "form": form,
-                  "entries": util.get_entry(title)
-                  }, tipo = "ListEntry",pagename=pagename, title=title)
-
-        except:
-            raise Http404("this topic does not exist")
+                  "entries": util.get_entry(title)},
+                   tipo = "ListEntry",pagename=pagename, title=title)
 
     else:
-        return render(request, "encyclopedia/index.html", {
-            "entries": util.list_entries() ,
+        print(f"Nao entrei no post EntryPage")
+        return render(request, "encyclopedia/EntryPage.html", tipo = "ListEntry",
+           {
+            "form": form,
             "encyclopedia": request.session["Pwiki"]
-        })
+           })
 
 
 
