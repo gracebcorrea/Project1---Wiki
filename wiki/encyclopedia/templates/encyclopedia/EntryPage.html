@@ -1,14 +1,15 @@
 {% extends "encyclopedia/layout.html" %}
 . The title of the page should include the name of the entry.
+
 {% block title %}
-    Entry Page
+       {{pagename}}
 {% endblock %}
 
 {% block body %}
 
 
 {%if tipo == "Search"%}
-<form action="{% url 'encyclopedia:Search' %}" method="post">
+<form action="{% url 'encyclopedia:Search' pagename %}" method="post">
       {% csrf_token %}
       {{ form }}
       {% for content in contents %}
@@ -21,7 +22,7 @@
 {%endif%}
 
 {%if tipo == "ListEntry"%}
-<form action="{% url 'encyclopedia:EntryPage' %}" method="post">
+<form action="{% url 'encyclopedia:EntryPage' pagename %}" method="post">
       {% csrf_token %}
       {{ form }}
       {% for content in contents %}
