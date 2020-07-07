@@ -69,22 +69,22 @@ def NewPage(request):
 
 def EntryPage(request, entry):
     print("Estou na Entry Page")
-    if request.method == "POST":
-        title = entry
-        pagename = "Wiki/"+title.capitalize()
-        print(title,pagename, tipo)
+    #if request.method == "POST":
+    title = entry
+    pagename = "Wiki/"+title.capitalize()
+    tipo="EntryPage"
+    print(title,pagename, tipo)
 
-        context = {
+    context = {
              "entry" :title.upper(),
              "pagename": pagename,
              "title": title,
-             "content":util.get_entry(title=title),
-             "tipo": "EntryPage"
-             "encyclopedia": request.session["Pwiki"]
-            }
-        return render(request, "encyclopedia/EntryPage.html", context)
-    else:
-        return render(request, "encyclopedia/EntryPage.html", {"pagename":"Estou tentando, nao entrou no post"})
+             "tipo": tipo,
+            # "content":util.get_entry(title=title)
+             }
+    return render(request, "encyclopedia/EntryPage.html", context)
+    #else:
+    #    return render(request, "encyclopedia/EntryPage.html", {"message":"Estou tentando, nao entrou no post"})
 
 
 
