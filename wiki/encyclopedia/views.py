@@ -34,12 +34,15 @@ def index(request):
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
 def EntryPage(request, entry):
+    print("Estou na Entry Page")
     title = entry
     pagename = "wiki/"+title.capitalize()
-    return render(request, "encyclopedia/EntryPage.html", {
-         "entries":util.get_entry(title),
-         "entry" : title.upper()},
+    context = {
+        "entries":util.get_entry(title),
+        "entry" : title.upper()
+        }
 
+    return render(request, "encyclopedia/EntryPage.html", context,
           tipo = "ListEntry", pagename = pagename)
 
 
@@ -91,6 +94,7 @@ Clicking on any of the entry names on the search results page should take the us
 
 def Search(request):
     print("estou na Search")
+
     """if request.method == "POST":
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
@@ -114,7 +118,7 @@ def Search(request):
             #if doesnotexist
             raise Http404("this topic does not exist")
     else:"""
-    return render(request, "encyclopedia/EntryPage.html", args =entry)
+    return render(request, "encyclopedia/EntryPage.html")
 
 
 
@@ -155,22 +159,7 @@ def insert_line(file_name, line_number, conteudo):
     #insert_line('arquivo.txt', 3, 'xyz')
 
 
-#Show New Files
-def Entries(request):
-    if request.method == "POST":
-        form = NewEntryForm(request.POST)
-        if form.is_valid():
-            entry = form.cleaned_data["entry"]
-            request.session["Pwiki"] += [entry]
-            return HttpResponseRedirect(reverse("entries:index"))
-        else:
-            return render(request, "entries/index.html", {
-                "form": form
-            })
-    else:
-        return render(request, "entries/index.html", {
-            "form": NewEntryForm()
-        })
+
 
 
 def AlertsDjango(request):
