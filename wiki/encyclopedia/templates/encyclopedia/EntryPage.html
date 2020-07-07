@@ -21,7 +21,7 @@
    {%endif%}
 
 {%if tipo == "ListEntry"%}
-<form action="{% url 'encyclopedia:EntryPage' %}" method="post">
+<form action="{% url 'encyclopedia:EntryPage' entry %}" method="post">
     {% csrf_token %}
 
     {% for content in contents %}
