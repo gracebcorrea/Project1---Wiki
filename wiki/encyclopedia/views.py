@@ -9,9 +9,10 @@ from . import util, views
 
 
 class NewEntryForm(forms.Form):
-    title = forms.CharField(label="Title")
-    content = forms.CharField(label="Content")
-    pagename = forms.CharField(label="Pagename")
+    title = forms.CharField(label="title")
+    content = forms.CharField(label="content")
+    pagename = forms.CharField(label="pagename")
+    tipo= forms.CharField(label="tipo")
 
 #Index Page return all itens from enciclopedia
 def index(request):
@@ -68,18 +69,24 @@ def NewPage(request):
 
 def EntryPage(request, entry):
     print("Estou na Entry Page")
-    title = entry
-    pagename = "Wiki/"+title.capitalize()
-    context = {
-        "content":util.get_entry(title),
-        "entry" : title.upper(),
-        "encyclopedia": request.session["Pwiki"]
-        }
+    if request.method == "POST":
+        title = entry
+        pagename = "Wiki/"+title.capitalize()
+        print(title,pagename, tipo)
 
-    return render(request, "encyclopedia/EntryPage.html",
-           context,
-           pagename = pagename ,
-           tipo= "ListEntry")
+        context = {
+             "entry" :title.upper(),
+             "pagename": pagename,
+             "title": title,
+             "content":util.get_entry(title=title),
+             "tipo": "EntryPage"
+             "encyclopedia": request.session["Pwiki"]
+            }
+        return render(request, "encyclopedia/EntryPage.html", context)
+    else:
+        return render(request, "encyclopedia/EntryPage.html", {"pagename":"Estou tentando, nao entrou no post"})
+
+
 
 
 
