@@ -85,18 +85,6 @@ def EntryPage(request, entry):
     return render(request, "encyclopedia/EntryPage.html", context)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 """
 Search: Allow the user to type a query into the search box in the sidebar to search
 for an encyclopedia entry.
@@ -109,11 +97,9 @@ should appear in the search results.
 Clicking on any of the entry names on the search results page should take the user to that entry’s page.
 """
 
-def Search(request):
-    print("estou na Search")
-
+def Search(request,q):
     if request.method == "POST":
-
+        tipo = "Search"
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
         count = 0
@@ -127,15 +113,20 @@ def Search(request):
                 if find(seekword) in lines:
                     count =+ 1
                     print(f"achei", [count])
-                    return render(request, "encyclopedia/EntryPage.html", {
-                           "entries": util.get_entry(title = title),
-                           "pagename" :pagename.upper() }, tipo = "Search" , pagename=pagename)
+                    context =  {
+                           "entry" :title.upper(),
+                           "content": util.get_entry(title = title),
+                           "pagename" :pagename.upper() ,
+                           "tipo" :tipo ,
+                           "pagename":pagename}
+
+                    return render(request, "encyclopedia/EntryPage.html", context)
 
         if count == 0:
             #if doesnotexist
             raise Http404("this topic does not exist")
     else:
-        return render(request, "encyclopedia/EntryPage.html")
+        return render(request, "encyclopedia/index.html")
 
 
 
