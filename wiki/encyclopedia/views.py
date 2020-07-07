@@ -33,13 +33,13 @@ def index(request):
 #Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
-def EntryPage(request, name):
-
-
+def EntryPage(request, entry):
+    title = entry
+    pagename = "Wiki/"+title.capitalize()
     return render(request, "encyclopedia/EntryPage.html", {
-         "name" : name.capitalize(),
-         "entries":util.get_entry(name)},
-          tipo = "ListEntry")
+         "name" : title.upper(),
+         "entries":util.get_entry(title)},
+          tipo = "ListEntry", pagename = pagename)
 
 
 
