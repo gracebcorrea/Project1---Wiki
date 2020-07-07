@@ -126,7 +126,7 @@ def Search(request,q):
             #if doesnotexist
             raise Http404("this topic does not exist")
     else:
-        return render(request, "encyclopedia/index.html")
+        return render(request, "encyclopedia/SearchResults.html")
 
 
 
