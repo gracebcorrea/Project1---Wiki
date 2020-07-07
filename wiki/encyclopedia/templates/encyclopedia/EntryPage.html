@@ -1,5 +1,4 @@
 {% extends "encyclopedia/layout.html" %}
-. The title of the page should include the name of the entry.
 
 {% block title %}
      {{pagename}}
@@ -21,12 +20,12 @@
    {%endif%}
 
 {%if tipo == "ListEntry"%}
-<form action="{% url 'encyclopedia:EntryPage' entry %}" method="post">
+<form action="{% url 'encyclopedia:EntryPage' %}" method="post">
     {% csrf_token %}
 
     {% for content in contents %}
-        <li>{{title}}</li>
-        <li>{{content}}</li>
+        <li>{{f}}</li>
+
     {% empty %}
         <li>No content.</li>
     {% endfor %}
