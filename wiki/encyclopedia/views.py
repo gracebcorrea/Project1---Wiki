@@ -8,6 +8,11 @@ from django.urls import reverse, path
 from . import util, views
 
 
+class NewEntryForm(forms.Form):
+    title = forms.CharField(label="Title")
+    content = forms.CharField(label="Content")
+    pagename = forms.CharField(label="Pagename")
+
 #Index Page return all itens from enciclopedia
 def index(request):
     if "Pwiki" not in request.session:
@@ -63,15 +68,19 @@ def NewPage(request):
 
 def EntryPage(request, entry):
     print("Estou na Entry Page")
-    title = [entry]
-    pagename = "wiki/"+title.capitalize()
+    title = entry
+    pagename = "Wiki/"+title.capitalize()
     context = {
-        "entries":util.get_entry(title),
-        "Ename" : title.upper(),
+        "content":util.get_entry(title),
+        "entry" : title.upper(),
+        "encyclopedia": request.session["Pwiki"]
         }
 
-    return render(request, "encyclopedia/EntryPage.html", context,
-          tipo = "ListEntry", pagename = pagename , f=f)
+    return render(request, "encyclopedia/EntryPage.html",
+           context,
+           pagename = pagename ,
+           tipo= "ListEntry")
+
 
 
 
@@ -99,7 +108,7 @@ def Search(request):
     print("estou na Search")
 
     if request.method == "POST":
-        
+
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
         count = 0
