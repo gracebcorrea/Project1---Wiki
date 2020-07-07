@@ -35,10 +35,11 @@ def index(request):
 
 def EntryPage(request, entry):
     title = entry
-    pagename = "Wiki/"+title.capitalize()
+    pagename = "wiki/"+title.capitalize()
     return render(request, "encyclopedia/EntryPage.html", {
-         "name" : title.upper(),
-         "entries":util.get_entry(title)},
+         "entries":util.get_entry(title),
+         "entry" : title.upper()},
+
           tipo = "ListEntry", pagename = pagename)
 
 
