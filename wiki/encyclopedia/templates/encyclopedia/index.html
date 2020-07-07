@@ -12,11 +12,11 @@
     directly to that entry page -->
 {% block body %}
     <h1>All Pages</h1>
-    <form action="{% url 'encyclopedia:EntryPage' entry %}" method="post">
+    <form action="{% url 'encyclopedia:index' %}" method="post">
         {% csrf_token %}
         <ul>
         {% for entry in entries %}
-             <li><a href= "{% url 'wiki/{{ entry }}'   %}" id='wiki/{{ entry }}' name='wiki/{{ entry }}' >{{ entry }}</a></li>
+             <li><a href= "{% url 'encyclopedia:EntryPage'  entry %}"  name='wiki/{{ entry }}' >{{ entry }}</a></li>
 
         {% endfor %}
         </ul>
