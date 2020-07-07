@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block body %}
+{{message}}
 <!--Entrypage-->
-    {%if tipo == "ListEntry"%}
+{% csrf_token %}
+{{ form }}
+    {%if tipo == "ListEntry" %}
          <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
-               {% csrf_token %}
-               {{ form }}
+
                 {% for content in contents %}
                        <li>{{title}}</li>
                        <li>{{content}}</li>
