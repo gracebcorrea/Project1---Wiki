@@ -1,0 +1,27 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search Results
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <h1>This are the results for your research, please click one to more details</h1>
+    <form action="{% url 'encyclopedia:Search' %}" method="post">
+        {% csrf_token %}
+        <ul>
+        {% for entry in entries %}
+             <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
+
+        {% endfor %}
+        </ul>
+    </form >
+
+
+
+
+
+{% endblock %}
