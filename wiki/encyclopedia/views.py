@@ -5,7 +5,7 @@ from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, path
 
-from . import util
+from . import util, views
 
 
 #Index Page
@@ -34,13 +34,9 @@ def index(request):
 # unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
 
 def EntryPage(request, entry):
-
-    try:
-        name = request.POST["entry"]
-        return HttpResponse(f"I got it , {name.capitalize()}!")
-    except Exception as e:
-        raise Http404(f"No Entry like, {name}")
-
+    print(f"estou na Entry Page")
+    
+    return HttpResponse(f"I got it , {entry.capitalize()}!")
 
     #print (entry)
     #return render(request, "encyclopedia/EntryPage.html", {"name" : name.capitalize() },  tipo = "ListEntry")
