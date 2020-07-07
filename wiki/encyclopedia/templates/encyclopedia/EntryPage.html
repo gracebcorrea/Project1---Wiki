@@ -1,8 +1,6 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-     {% csrf_token %}
-     {{ form }}
      {{pagename}}
 {% endblock %}
 
@@ -10,9 +8,11 @@
 <!--Entrypage-->
     {%if tipo == "ListEntry"%}
          <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
-
+               {% csrf_token %}
+               {{ form }}
                 {% for content in contents %}
-                       <li>{{f}}</li>
+                       <li>{{title}}</li>
+                       <li>{{content}}</li>
                 {% empty %}
                         <li>No content.</li>
                 {% endfor %}
