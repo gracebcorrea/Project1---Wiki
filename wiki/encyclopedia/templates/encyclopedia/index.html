@@ -16,7 +16,7 @@
         {% csrf_token %}
         <ul>
         {% for entry in entries %}
-             <li><a href= "{% url 'encyclopedia:EntryPage'  entry %}"   >{{ entry }}</a></li>
+             <li><a href= "{% url 'encyclopedia:EntryPage' entry %}"   >{{ entry }}</a></li>
 
         {% endfor %}
         </ul>
