@@ -8,7 +8,7 @@ from django.urls import reverse, path
 from . import util, views
 
 
-#Index Page
+#Index Page return all itens from enciclopedia
 def index(request):
     if "Pwiki" not in request.session:
         request.session["Pwiki"] = []
@@ -17,41 +17,6 @@ def index(request):
         "entries": util.list_entries() ,
         "encyclopedia": request.session["Pwiki"]
     })
-
-#Entry Page: Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry,
-#should render a page that displays the contents of that encyclopedia entry.
-#   The view should get the content of the encyclopedia entry by calling the appropriate util function.
-#   If an entry is requested that does not exist, the user should be presented with an error page
-#indicating that their requested page was not found.
-#   If the entry does exist, the user should be presented with a page that displays the content of
-#the entry
-
-#Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
-#converted to HTML before being displayed to the user. You may use the python-markdown2 package
-#to perform this conversion, installable via pip3 install markdown2.
-#Challenge for those more comfortable: If you’re feeling more comfortable, try implementing the
-#Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
-# unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
-
-def EntryPage(request, entry):
-    print("Estou na Entry Page")
-    title = entry
-    pagename = "wiki/"+title.capitalize()
-    context = {
-        "entries":util.get_entry(title),
-        "entry" : title.upper()
-        }
-
-    return render(request, "encyclopedia/EntryPage.html", context,
-          tipo = "ListEntry", pagename = pagename)
-
-
-
-
-
-
-
-
 
 
 #New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create
@@ -80,6 +45,44 @@ def NewPage(request):
     else:
         return render(request, "encyclopedia/NewPage.html")
 
+
+#Entry Page: Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry,
+#should render a page that displays the contents of that encyclopedia entry.
+#   The view should get the content of the encyclopedia entry by calling the appropriate util function.
+#   If an entry is requested that does not exist, the user should be presented with an error page
+#indicating that their requested page was not found.
+#   If the entry does exist, the user should be presented with a page that displays the content of
+#the entry
+
+#Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
+#converted to HTML before being displayed to the user. You may use the python-markdown2 package
+#to perform this conversion, installable via pip3 install markdown2.
+#Challenge for those more comfortable: If you’re feeling more comfortable, try implementing the
+#Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
+# unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
+
+def EntryPage(request, entry):
+    print("Estou na Entry Page")
+    title = [entry]
+    pagename = "wiki/"+title.capitalize()
+    context = {
+        "entries":util.get_entry(title),
+        "Ename" : title.upper(),
+        }
+
+    return render(request, "encyclopedia/EntryPage.html", context,
+          tipo = "ListEntry", pagename = pagename , f=f)
+
+
+
+
+
+
+
+
+
+
+
 """
 Search: Allow the user to type a query into the search box in the sidebar to search
 for an encyclopedia entry.
@@ -95,7 +98,8 @@ Clicking on any of the entry names on the search results page should take the us
 def Search(request):
     print("estou na Search")
 
-    """if request.method == "POST":
+    if request.method == "POST":
+        
         seekword = "%"+request.POST["q"]+"%"
         print(f"Entrei no post do Search" , [seekword])
         count = 0
@@ -111,14 +115,13 @@ def Search(request):
                     print(f"achei", [count])
                     return render(request, "encyclopedia/EntryPage.html", {
                            "entries": util.get_entry(title = title),
-                           "form": form,
-                           "pagename" :pagename.capitalize() }, tipo = "Search" , pagename=pagename)
+                           "pagename" :pagename.upper() }, tipo = "Search" , pagename=pagename)
 
         if count == 0:
             #if doesnotexist
             raise Http404("this topic does not exist")
-    else:"""
-    return render(request, "encyclopedia/EntryPage.html")
+    else:
+        return render(request, "encyclopedia/EntryPage.html")
 
 
 
