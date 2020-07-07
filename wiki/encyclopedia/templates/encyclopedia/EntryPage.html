@@ -1,37 +1,36 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
+     {% csrf_token %}
+     {{ form }}
      {{pagename}}
 {% endblock %}
 
 {% block body %}
+<!--Entrypage-->
+    {%if tipo == "ListEntry"%}
+         <form action="{% url 'encyclopedia:EntryPage' %}" method="post">
+
+                {% for content in contents %}
+                       <li>{{f}}</li>
+                {% empty %}
+                        <li>No content.</li>
+                {% endfor %}
+         </form>
+    {%endif%}
 
 
+<!--Search-->
 {%if tipo == "Search"%}
 <form action="{% url 'encyclopedia:Search'  %}" method="post">
    {% csrf_token %}
-
+   {{ form }}
    {% for content in contents %}
       <li>{{title}}</li>
       <li>{{content}}</li>
    {% empty %}
       <li>No content.</li>
    {% endfor %}
-   {%endif%}
-
-{%if tipo == "ListEntry"%}
-<form action="{% url 'encyclopedia:EntryPage' %}" method="post">
-    {% csrf_token %}
-
-    {% for content in contents %}
-        <li>{{f}}</li>
-
-    {% empty %}
-        <li>No content.</li>
-    {% endfor %}
-    {%endif%}
-</form>
-
-
+{%endif%}
 
 {% endblock %}
