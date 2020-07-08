@@ -6,11 +6,13 @@
 
 
 {% block body %}
+    {{message}}
     <form action="{% url 'encyclopedia:Search' %}" method="post">
       {% csrf_token %}
-      {{form}}
+      {{ form }}
+
       <h1>This are the results for your research, please click one to more details</h1>
-      {{message}}
+
      <!--<ul>
         {% for entry in entries %}
              <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
