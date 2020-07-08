@@ -102,11 +102,12 @@ Clicking on any of the entry names on the search results page should take the us
 def Search(request):
     if request.method == "POST":
         tipo = "Search"
-        seekfile =request.POST["q"]
+        seekfile = request.POST["q"]
         seekword = "%"+request.POST["q"]+"%"
         count = 0
         _, filenames = default_storage.listdir("entries")
         arquivo = seekfile+".md"
+
         print(f"Estou no Post de Search", seekword, arquivo)
 
         if arquivo in filenames:
@@ -126,29 +127,35 @@ def Search(request):
            return render(request, "encyclopedia/EntryPage.html", context)
 
         else:
+            print("Não achei arquivo com este nome",arquivo)
             for filename in filenames:
-                with open(filename, "r") as file:
-                    title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                    filename.seek(0,0)  #posisiona na primeira linha do arquivo
-                    conteudo = filename.read()
-                    print("Vou tentar arquivo por aquivo", filename, title, seekword)
+                arquivo=filename
+                title = re.sub(r"\.md$", "", arquivo) #o título é o nome do arquivo sem extensão
 
-                    if find(seekword) in conteudo:
+                print("Trying to find string :", seekword,"in:" title)
+
+                try:
+                    with  open(arquivo, "r") as file:
+                        conteudo = arquivo.read()
+                        print("entrei no arquivo:", arquivo)
+
+                    print(len(conteudo),conteudo[:256] )
+
+                    if seekword in conteudo:
                         count =+ 1
                         print(f"achei parte em um arquivo", count, seekword )
 
                         context =  {
                            "name" : title ,
                            "pagename" :pagename.upper() ,
-                           "tipo" :tipo ,
-                           "pagename":pagename,
+                           "title" :title ,
                            "message":"Lista as opções",
                            "encyclopedia": request.session["Pwiki"]
-
                            }
                         return render(request, "encyclopedia/SearchResults.html", context)
-                    else:
-                        print( "Nothing on:" , filename)
+
+                except:
+                    print( "Nothing on:" , filename)
 
 
             if count == 0:
