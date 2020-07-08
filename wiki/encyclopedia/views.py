@@ -132,16 +132,16 @@ def Search(request):
                 arquivo=filename
                 title = re.sub(r"\.md$", "", arquivo) #o título é o nome do arquivo sem extensão
 
-                print("Trying to find string :", seekword,"in:" title)
+                print("Trying to find string :", seekword,"in:", title)
 
                 try:
                     with  open(arquivo, "r") as file:
-                        conteudo = arquivo.read()
+                        conteudo = arquivo.readlines()
                         print("entrei no arquivo:", arquivo)
 
                     print(len(conteudo),conteudo[:256] )
 
-                    if seekword in conteudo:
+                    if find(seekword) in conteudo:
                         count =+ 1
                         print(f"achei parte em um arquivo", count, seekword )
 
@@ -159,7 +159,12 @@ def Search(request):
 
 
             if count == 0:
-               return HttpResponse("Error. No file or Text with this content was found")
+               context = {
+                      "message":"Error 404. No file or Text with this content was found.",
+                      "encyclopedia": request.session["Pwiki"]
+                      }
+               return render(request, "encyclopedia/SearchResults.html", context)
+
 
     else:
         context = {
