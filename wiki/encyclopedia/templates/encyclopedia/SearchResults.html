@@ -8,6 +8,7 @@
 {% block body %}
     <h2>See all results for your research, please click one for details:</h2>
     <b > {{message}}</b}
+
     <form action="{% url 'encyclopedia:Search' %}" method="post">
          {% csrf_token %}
     <!--     <ul>
