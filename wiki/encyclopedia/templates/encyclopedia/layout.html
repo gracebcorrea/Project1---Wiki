@@ -8,14 +8,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
     </head>
     <body>
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
                 <h2>Wiki</h2>
-                <form>
-                    <input action= "{% url 'encyclopedia:index'  %}" method="post" class="search" type="text" name="q" id="q" placeholder="Search Encyclopedia">
+                <form class="form-inline" action= "{% url 'encyclopedia:Search' %}" method="post">
+                    <input class="search" type="text" name="q" id="q" placeholder="Search Encyclopedia">
+                    <button class="form-inline" type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 <div>
                     <a href="{% url 'encyclopedia:index' %}">Home</a>
