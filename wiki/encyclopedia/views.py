@@ -1,4 +1,4 @@
-import shutil, tempfile, os, os.path
+import shutil, tempfile, os, os.path, re
 
 from django.shortcuts import render
 from django import forms
@@ -26,16 +26,16 @@ def index(request):
     })
 
 
-#New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create
-#a new encyclopedia entry.
-#Users should be able to enter a title for the page and, in a textarea, should be able to enter the
-#Markdown content for the page.
-#Users should be able to click a button to save their new page.
-#When the page is saved, if an encyclopedia entry already exists with the provided title, the user should
-# be presented with an error message.
-#Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s
-#page.
-
+"""New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create
+a new encyclopedia entry.
+Users should be able to enter a title for the page and, in a textarea, should be able to enter the
+Markdown content for the page.
+Users should be able to click a button to save their new page.
+when the page is saved, if an encyclopedia entry already exists with the provided title, the user should
+ be presented with an error message.
+Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s
+page.
+"""
 def NewPage(request):
     if request.method == "POST":
         print(f"Entrei no post do New Page")
@@ -53,21 +53,21 @@ def NewPage(request):
         return render(request, "encyclopedia/NewPage.html")
 
 
-#Entry Page: Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry,
-#should render a page that displays the contents of that encyclopedia entry.
-#   The view should get the content of the encyclopedia entry by calling the appropriate util function.
-#   If an entry is requested that does not exist, the user should be presented with an error page
-#indicating that their requested page was not found.
-#   If the entry does exist, the user should be presented with a page that displays the content of
-#the entry
+"""Entry Page: Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry,
+should render a page that displays the contents of that encyclopedia entry.
+The view should get the content of the encyclopedia entry by calling the appropriate util function.
+If an entry is requested that does not exist, the user should be presented with an error page
+indicating that their requested page was not found.
+   If the entry does exist, the user should be presented with a page that displays the content of
+the entry
 
-#Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
-#converted to HTML before being displayed to the user. You may use the python-markdown2 package
-#to perform this conversion, installable via pip3 install markdown2.
-#Challenge for those more comfortable: If you’re feeling more comfortable, try implementing the
-#Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
-# unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
-
+  Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
+converted to HTML before being displayed to the user. You may use the python-markdown2 package
+to perform this conversion, installable via pip3 install markdown2.
+Challenge for those more comfortable: If you’re feeling more comfortable, try implementing the
+Markdown to HTML conversion without using any external libraries, supporting headings, boldface text,
+unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
+"""
 def EntryPage(request, entry):
     print("Estou na Entry Page")
 
@@ -126,11 +126,13 @@ def Search(request):
            return render(request, "encyclopedia/EntryPage.html", context)
 
         else:
-            """for filename in filenames:
+            for filename in filenames:
                 with open(filename, "r") as file:
                     title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
                     filename.seek(0,0)  #posisiona na primeira linha do arquivo
                     conteudo = filename.read()
+                    print("Vou tentar arquivo por aquivo", filename, title, seekword)
+
                     if find(seekword) in conteudo:
                         count =+ 1
                         print(f"achei parte em um arquivo", count, seekword )
@@ -144,9 +146,10 @@ def Search(request):
                            "encyclopedia": request.session["Pwiki"]
 
                            }
-            context ={ "message": "Não achei arquivo com este nome"}
+                        return render(request, "encyclopedia/SearchResults.html", context)
+                    else:
+                        print( "Nothing on:" , filename)
 
-            return render(request, "encyclopedia/SearchResults.html", context)"""
 
             if count == 0:
                return HttpResponse("Error. No file or Text with this content was found")
@@ -182,6 +185,8 @@ def EditPage(request):
 
 
 #insert text on the file in any line
+# incluir o texto "xyz" na terceira linha do arquivo
+#insert_line('arquivo.txt', 3, 'xyz')
 def insert_line(file_name, line_number, conteudo):
     with open(file_name) as orig, \
          tempfile.NamedTemporaryFile('w', delete=False) as out:
@@ -190,12 +195,4 @@ def insert_line(file_name, line_number, conteudo):
                 out.write(f'{conteudo}\n')
                 out.write(f'\n')
             out.write(line)
-
-
     shutil.move(out.name, file_name)
-
-
-
-
-def AlertsDjango(request):
-    return render(request, "encyclopedia/AlertsDjango.html",{"tipo":"Alert"})
