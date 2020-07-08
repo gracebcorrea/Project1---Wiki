@@ -7,15 +7,15 @@
 
 {% block body %}
     <h2>See all results for your research, please click one for details:</h2>
-    <b > {{message}}</b}
+   {{message}}
 
-    <form action="{% url 'encyclopedia:Search' %}" method="post">
+  <!--  <form action="{% url 'encyclopedia:Search' %}" method="post">
          {% csrf_token %}
          <ul>
          {% for file in filenames %}
-           <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
+             <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
          {% endfor %}
           </ul>
-    </form >
+    </form >  -->
 
 {% endblock %}
