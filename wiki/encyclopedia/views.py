@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, path
+from django.core.files.storage import default_storage
 
 from . import util, views
 
@@ -81,6 +82,7 @@ def EntryPage(request, entry):
              "title": title,
              "tipo": tipo,
              "content":util.get_entry(title=title)
+
              }
     return render(request, "encyclopedia/EntryPage.html", context)
 
@@ -98,20 +100,55 @@ Clicking on any of the entry names on the search results page should take the us
 """
 
 def Search(request):
-    print("Estou em Serach")
     if request.method == "POST":
         tipo = "Search"
+        seekfile =request.POST["q"]
         seekword = "%"+request.POST["q"]+"%"
-        message=seekword
+        count = 0
+        _, filenames = default_storage.listdir("entries")
+        arquivo = seekfile+".md"
+        print(f"Estou no Post de Search", seekword, arquivo)
 
+        if arquivo in filenames:
+            count += 1
+            title = seekfile
+            message= "You´re Lucky!"
+            pagename = "Wiki/"+title.capitalize()
+            print(f"Achei arquivo : ",arquivo, count ,message , pagename)
+            context = {
+                     "entry" :title.upper(),
+                     "pagename": pagename,
+                     "title": title,
+                     "tipo": tipo,
+                     "message": "You are Lucky!",
+                     "content":util.get_entry(title=title)
+                     }
+            return render(request, "encyclopedia/EntryPage.html", context)
+        else:
+            for filename in filenames:
+                arquivo=filename
+                with open(arquivo, "r") as file:
+                    title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                    arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
+                    lines = arquivo.read()
+                    if find(seekword) in lines:
+                        count =+ 1
+                        print(f"achei", [count])
+                        context =  {
+                           "entry" :title.upper(),
+                           "content": util.get_entry(title = title),
+                           "pagename" :pagename.upper() ,
+                           "tipo" :tipo ,
+                           "pagename":pagename,
+                           "message":"Lista as opções",
+                           "encyclopedia": request.session["Pwiki"]
 
+                           }
 
-        context = {
-         "message":message,
-         "encyclopedia": request.session["Pwiki"]
-        }
-        return render(request, "encyclopedia/SearchResults.html", context)
+                        return render(request, "encyclopedia/SearchResults.html", context)
 
+        if count == 0:
+            raise Http404("this topic does not exist")
 
     else:
         context = {
@@ -155,9 +192,6 @@ def insert_line(file_name, line_number, conteudo):
 
 
     shutil.move(out.name, file_name)
-    # incluir o texto "xyz" na terceira linha do arquivo
-    #insert_line('arquivo.txt', 3, 'xyz')
-
 
 
 
