@@ -11,11 +11,11 @@
 
     <form action="{% url 'encyclopedia:Search' %}" method="post">
          {% csrf_token %}
-    <!--     <ul>
-         {% for entry in entries %}
+         <ul>
+         {% for file in filenames %}
            <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
          {% endfor %}
-      </ul>-->
+          </ul>
     </form >
 
 {% endblock %}
