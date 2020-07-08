@@ -105,12 +105,15 @@ def Search(request):
 
 
 
-        context = {"message":message}
+        context = {
+         "message":message,
+         "form": form
+        }
         return render(request, "encyclopedia/SearchResults.html", context)
 
 
     else:
-        return render(request, "encyclopedia/SearchResults.html")
+        return render(request, "encyclopedia/SearchResults.html", {"message":"Nao entrei no post"})
 
 
 
