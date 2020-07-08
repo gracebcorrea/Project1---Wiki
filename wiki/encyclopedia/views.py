@@ -110,40 +110,41 @@ def Search(request):
         print(f"Estou no Post de Search", seekword, arquivo)
 
         if arquivo in filenames:
-            count += 1
-            title = seekfile
-            message= "You´re Lucky!"
-            pagename = "Wiki/"+title.capitalize()
-            print(f"Achei arquivo : ",arquivo, count ,message , pagename)
-            context = {
+           count += 1
+           title = seekfile
+           message= "You´re Lucky! We found "+str(count)+ " file"
+           pagename = "Wiki/"+title.capitalize()
+           print(f"Achei arquivo : ",arquivo, message , pagename, title)
+           context = {
                      "entry" :title.upper(),
                      "pagename": pagename,
                      "title": title,
                      "tipo": tipo,
-                     "message": "You are Lucky!",
+                     "message":message,
                      "content":util.get_entry(title=title)
                      }
-            return render(request, "encyclopedia/EntryPage.html", context)
+           return render(request, "encyclopedia/EntryPage.html", context)
+
         else:
-            for filename in filenames:
-                arquivo=filename
-                with open(arquivo, "r") as file:
+            """for filename in filenames:
+                with open(filename, "r") as file:
                     title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                    arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
-                    lines = arquivo.read()
-                    if find(seekword) in lines:
+                    filename.seek(0,0)  #posisiona na primeira linha do arquivo
+                    conteudo = filename.read()
+                    if find(seekword) in conteudo:
                         count =+ 1
-                        print(f"achei", [count])
+                        print(f"achei parte em um arquivo", count, seekword )
+
                         context =  {
-                           "entry" :title.upper(),
-                           "content": util.get_entry(title = title),
+                           "name" : title ,
                            "pagename" :pagename.upper() ,
                            "tipo" :tipo ,
                            "pagename":pagename,
                            "message":"Lista as opções",
                            "encyclopedia": request.session["Pwiki"]
 
-                           }
+                           }"""
+                        context ={ "message": "Não achei arquivo"}   
 
                         return render(request, "encyclopedia/SearchResults.html", context)
 
