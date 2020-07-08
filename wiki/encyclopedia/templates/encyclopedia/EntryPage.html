@@ -11,12 +11,15 @@
     {%if tipo == "ListEntry" %}
         {% csrf_token %}
              <h1>{{title}}</h1>
+             <br>
              <p>{{content}}</p>
     {%endif%}
 
     {%if tipo == "Search" %}
+        <h3>{{message}}</h3}
         {% csrf_token %}
              <h1>{{title}}</h1>
+            <br>
              <p>{{content}}</p>
     {%endif%}
 
