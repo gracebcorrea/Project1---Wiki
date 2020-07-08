@@ -97,34 +97,18 @@ should appear in the search results.
 Clicking on any of the entry names on the search results page should take the user to that entry’s page.
 """
 
-def Search(request,q):
+def Search(request):
     if request.method == "POST":
         tipo = "Search"
         seekword = "%"+request.POST["q"]+"%"
-        print(f"Entrei no post do Search" , [seekword])
-        count = 0
-        _, filenames = default_storage.listdir("entries")
-        for filename in filenames:
-            arquivo = filename     # "recebe o nome do arquivo e abre"
-            with open(arquivo, "r") as file:
-                title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                arquivo.seek(0,0)  #posisiona na primeira linha do arquivo
-                lines = arquivo.read()
-                if find(seekword) in lines:
-                    count =+ 1
-                    print(f"achei", [count])
-                    context =  {
-                           "entry" :title.upper(),
-                           "content": util.get_entry(title = title),
-                           "pagename" :pagename.upper() ,
-                           "tipo" :tipo ,
-                           "pagename":pagename}
+        message="Entrei no Post"
 
-                    return render(request, "encyclopedia/EntryPage.html", context)
 
-        if count == 0:
-            #if doesnotexist
-            raise Http404("this topic does not exist")
+
+        context = {"message":message}
+        return render(request, "encyclopedia/SearchResults.html", context)
+
+
     else:
         return render(request, "encyclopedia/SearchResults.html")
 
