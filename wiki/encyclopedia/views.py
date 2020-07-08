@@ -143,13 +143,13 @@ def Search(request):
                            "message":"Lista as opções",
                            "encyclopedia": request.session["Pwiki"]
 
-                           }"""
-                        context ={ "message": "Não achei arquivo"}   
+                           }
+            context ={ "message": "Não achei arquivo com este nome"}
 
-                        return render(request, "encyclopedia/SearchResults.html", context)
+            return render(request, "encyclopedia/SearchResults.html", context)"""
 
-        if count == 0:
-            raise Http404("this topic does not exist")
+            if count == 0:
+               return HttpResponse("Error. No file or Text with this content was found")
 
     else:
         context = {
