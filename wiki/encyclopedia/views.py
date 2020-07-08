@@ -98,22 +98,27 @@ Clicking on any of the entry names on the search results page should take the us
 """
 
 def Search(request):
+    print("Estou em Serach")
     if request.method == "POST":
         tipo = "Search"
         seekword = "%"+request.POST["q"]+"%"
-        message="Entrei no Post"
+        message=seekword
 
 
 
         context = {
          "message":message,
-         "form": form
+         "encyclopedia": request.session["Pwiki"]
         }
         return render(request, "encyclopedia/SearchResults.html", context)
 
 
     else:
-        return render(request, "encyclopedia/SearchResults.html", {"message":"Nao entrei no post"})
+        context = {
+         "message":"Nao entrei no Post",
+         "encyclopedia": request.session["Pwiki"]
+        }
+        return render(request, "encyclopedia/SearchResults.html", context)
 
 
 
