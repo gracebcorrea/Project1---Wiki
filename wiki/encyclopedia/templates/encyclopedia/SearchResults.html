@@ -15,9 +15,11 @@
     <form action="{% url 'encyclopedia:Search' %}" method="post">
          <h2>See all results for your research, please click one for details:</h2>
          {% csrf_token %}
+
          <ul>
          {% for entry in entries %}
-             <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
+             {{ entry }}
+             <!--<li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>-->
          {% endfor %}
           </ul>
     </form >
