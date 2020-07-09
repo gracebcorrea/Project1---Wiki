@@ -184,10 +184,14 @@ def RandomPage(request):
 
 def EditPage(request):
     if request.method == "POST":
-        return (request, "encyclopedia/EditPage.html",{"message":"to no post"})
+
+
+        context = {"message":"To no post"}
+        return (request, "encyclopedia/EditPage.html",context)
 
     else:
-        return (request, "encyclopedia/EditPage.html",{"message":"não estou no post"})
+        context ={"message":"Não estou no post"}
+        return (request, "encyclopedia/EditPage.html",context)
 
 
 
