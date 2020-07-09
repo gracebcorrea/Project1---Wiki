@@ -76,12 +76,11 @@ def EntryPage(request, entry):
 
 
     context = {
-             "entry" :title.upper(),
-             "pagename": pagename,
-             "title": title,
-             "content":util.get_entry(title=title)
-
-             }
+        "entry" :title.upper(),
+        "pagename": pagename,
+        "title": title,
+        "content":util.get_entry(title=title)
+        }
     return render(request, "encyclopedia/EntryPage.html", context)
 
 
@@ -114,50 +113,57 @@ def Search(request):
            Searchentry = title.upper()
            print(f"Achei arquivo : ",arquivo, message , pagename, title)
            context = {
-                     "Searchentry" :Searchentry,
-                     "pagename": pagename,
-                     "title": title,
-                     "message":message,
-                     "content":util.get_entry(title=title)
-                     }
+                "Searchentry" :Searchentry,
+                "pagename": pagename,
+                "title": title,
+                "message":message,
+                "content":util.get_entry(title=title)
+                }
            return render(request, "encyclopedia/EntryPage.html", context)
 
         else:
             TitulosAchados = []
             print(f"lista de arquivos a procurar",filenames)
+
             for filename in filenames:
                 print(f"Trying to find string :", seekword,"in:", filename)
                 meuarquivo= "entries/"+filename
+
                 with open(meuarquivo) as myfile:
                     if seekword in myfile.read():
-                       count =+ 1
-                       title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                       print(f'Achei :', seekword, "em",meuarquivo )
-                       print(f"vou salvar para imprimir: ",title)
-                       TitulosAchados.append(title)
-                       Searchentry=title.upper()
-            context =  {
-               "Searchentry" :Searchentry,
-               "seekword":seekword,
-               "count":count,
-               "TitulosAchados": TitulosAchados,
-               "encyclopedia": request.session["Pwiki"]
-               }
-            return render(request, "encyclopedia/Search.html", context)
-        if count == 0:
-            context = {
-                "count" : count,
-                "message":"Error 404. No file or Text with this content was found.",
-                "encyclopedia": request.session["Pwiki"]
-                }
-            return render(request, "encyclopedia/Search.html", context)
+                        count = count + 1
+                        titulo = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                        print(f'Achei :', seekword, "em", meuarquivo )
+                        print(f"vou salvar para imprimir: ",titulo , str(count))
+                        TitulosAchados.append(titulo)
+
+
+
+                    #    Searchentry=title.upper()
+            if count == 0:
+                context ={
+                    "count" : count,
+                    "seekword":seekword,
+                    "message":"Error 404. No file or Text with this content was found."
+                    }
+                return render(request, "encyclopedia/Search.html", context)
+            else:
+                context ={
+                    "seekword":seekword,
+                    "count":count,
+                    "titulo": titulo,
+                    "TitulosAchados": TitulosAchados             #list(sorted(TitulosAchados))
+                     }
+                return render(request, "encyclopedia/Search.html", context)
+
+
 
 
     else:
-        context = {
-         "message":"Nao entrei no Post",
-         "encyclopedia": request.session["Pwiki"]
-        }
+        context ={
+            "message":"Nao entrei no Post",
+            "encyclopedia": request.session["Pwiki"]
+            }
         return render(request, "encyclopedia/Search.html", context)
 
 
