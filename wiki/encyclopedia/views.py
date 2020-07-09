@@ -14,7 +14,7 @@ class NewEntryForm(forms.Form):
     content = forms.CharField(label="content")
     pagename = forms.CharField(label="pagename")
 
-page=""    
+page=""
 
 #Index Page return all itens from enciclopedia
 def index(request):
@@ -180,13 +180,47 @@ def RandomPage(request):
     else:
         return HttpResponseRedirect(reverse("RandomPage"))
 
-#Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
-#The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
-#The user should be able to click a button to save the changes made to the entry.
-#Once the entry is saved, the user should be redirected back to that entry’s page.
+"""
+Edit Page: On each entry page, the user should be able to click a link to be taken to a page
+where the user can edit that entry’s Markdown content in a textarea.
+the textarea should be pre-populated with the existing Markdown content of the page.
+(i.e., the existing content should be the initial value of the textarea).
+The user should be able to click a button to save the changes made to the entry.
+Once the entry is saved, the user should be redirected back to that entry’s page.
+"""
+def EditPage(request, title, content):
 
-def EditPage(request):
-    return (request, "encyclopedia/EditPage.html",{"message":"Edit Page"})
+    titletoedit = title
+    contenttoedit = content
+    print("acessing Edit Page" , titletoedit,contenttoedit )
+    if request.method == "POST":
+
+        print(f"I´m in post from  Edit Page")
+        """
+        title = request.POST["EditTitle"]
+        content = request.POST["EditContent"]
+        rastag = "# "+title
+
+        #create update for file
+
+
+
+
+
+
+        context ={
+             "entries":util.save_entry(title=title, content=content),
+             "entries":insert_line(file_name=f"entries/{title}.md", line_number= 1, conteudo=rastag),
+             "entries": util.list_entries(),
+             "encyclopedia": request.session["Pwiki"]}
+
+        return render(request,"encyclopedia/index.html",context)
+
+
+        """
+
+    else:
+        return render(request, "encyclopedia/EditPage.html")
 
 
 
