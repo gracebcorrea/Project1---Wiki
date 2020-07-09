@@ -146,10 +146,10 @@ def Search(request):
                         print(f"achei parte em um arquivo", count, seekword )
 
                         context =  {
-                           "name" : title ,
                            "pagename" :pagename.upper() ,
-                           "title" :title ,
                            "message":"Lista as opções",
+                           "entry" :title ,
+                           "count" : count,
                            "encyclopedia": request.session["Pwiki"]
                            }
                         return render(request, "encyclopedia/SearchResults.html", context)
@@ -160,6 +160,7 @@ def Search(request):
 
             if count == 0:
                context = {
+                      "count" : count,
                       "message":"Error 404. No file or Text with this content was found.",
                       "encyclopedia": request.session["Pwiki"]
                       }
