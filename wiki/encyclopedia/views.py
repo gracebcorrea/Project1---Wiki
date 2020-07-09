@@ -126,42 +126,31 @@ def Search(request):
            return render(request, "encyclopedia/EntryPage.html", context)
 
         else:
-
+            TitulosComTexto = []
             for filename in filenames:
-                arquivo=filename
-                title = re.sub(r"\.md$", "", arquivo) #o título é o nome do arquivo sem extensão
+                print("Trying to find string :", seekword,"in:", filename)
+                if check_if_string_in_file(filename, seekword) == True:
+                    count =+ 1
+                    title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
 
-                print("Trying to find string :", seekword,"in:", title)
+                    print(f"achei parte em um arquivo", seekword, str(count), arquivo )
 
-                try:
-                    if check_if_string_in_file(arquivo, seekword):
-                        count =+ 1
-                        print(f"achei parte em um arquivo", count, seekword, str(count) )
+                    TitulosComTexto.append(title)
 
-                        context =  {
-                           "pagename" :pagename.upper() ,
-                           "entry" :title ,
-                           "count" : count,
-                           "encyclopedia": request.session["Pwiki"]
-                           }
-                        return render(request, "encyclopedia/SearchResults.html", context)
-
-                except:
-
-                    context = {
-                              "count" : count,
-                              "message":"Error 400. Invalid Request, error while trying to find word." + str(count),
-                              "encyclopedia": request.session["Pwiki"]
-                               }
-                    return render(request, "encyclopedia/SearchResults.html", context)
-
-            if count == 0:
-                context = {
-                      "count" : count,
-                      "message":"Error 404. No file or Text with this content was found.",
-                      "encyclopedia": request.session["Pwiki"]
-                       }
-                return render(request, "encyclopedia/SearchResults.html", context)
+            context =  {
+               "count":count,
+               "TituloComTexto": title,
+               "TitulosComTexto": TitulosComTexto,
+               "encyclopedia": request.session["Pwiki"]
+               }
+            return render(request, "encyclopedia/SearchResults.html", context)
+        if count == 0:
+            context = {
+                "count" : count,
+                "message":"Error 404. No file or Text with this content was found.",
+                "encyclopedia": request.session["Pwiki"]
+                }
+            return render(request, "encyclopedia/SearchResults.html", context)
 
 
     else:
@@ -218,4 +207,23 @@ def check_if_string_in_file(file_name, string_to_search):
             # For each line, check if line contains the string
             if string_to_search in line:
                 return True
+
     return False
+
+
+def search_multiple_strings_in_file(file_name, list_of_strings):
+    """Get line from the file along with line numbers, which contains any string from the list"""
+    line_number = 0
+    list_of_results = []
+    # Open the file in read only mode
+    with open(file_name, 'r') as read_obj:
+        # Read all lines in the file one by one
+        for line in read_obj:
+            line_number += 1
+            # For each line, check if line contains any string from the list of strings
+            for string_to_search in list_of_strings:
+                if string_to_search in line:
+                    # If any string is found in line, then append that line along with line number in list
+                    list_of_results.append((string_to_search, line_number, line.rstrip()))
+    # Return list of tuples containing matched string, line numbers and lines where string is found
+    return list_of_results
