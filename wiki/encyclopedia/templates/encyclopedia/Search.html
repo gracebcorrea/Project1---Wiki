@@ -12,15 +12,15 @@
 
   <!--  <form action="{% url 'encyclopedia:Search' %}" method="post">-->
          {% csrf_token %}
-         <h2>See all {{count}} results for your search, {{seekword}}</h2>
+         <h2>See all {{count}} files results for your search, {{seekword}}</h2>
          {%if count > 0 %}
-         <h2>   Please click one for details:</h2>
+         <h3>   Please click one for details:</h3>
          {%endif%}
 
          <ol>
          {% for titulo in TitulosAchados %}
 
-            <h4 > <li> <a href= "#"    > {{ titulo }} </a> </li> <h4>
+            <h4 > <li> <a href= "{% url 'encyclopedia:EntryPage' entry=titulo %}"    > {{ titulo }} </a> </li> <h4>
 
          {% endfor %}
           </ol>
