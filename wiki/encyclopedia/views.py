@@ -13,7 +13,6 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="title")
     content = forms.CharField(label="content")
     pagename = forms.CharField(label="pagename")
-    tipo= forms.CharField(label="tipo")
 
 #Index Page return all itens from enciclopedia
 def index(request):
@@ -73,14 +72,13 @@ def EntryPage(request, entry):
 
     title = entry
     pagename = "Wiki/"+title.capitalize()
-    tipo="ListEntry"
+
 
 
     context = {
              "entry" :title.upper(),
              "pagename": pagename,
              "title": title,
-             "tipo": tipo,
              "content":util.get_entry(title=title)
 
              }
@@ -101,7 +99,6 @@ Clicking on any of the entry names on the search results page should take the us
 
 def Search(request):
     if request.method == "POST":
-        tipo = "Search"
         seekfile = request.POST["q"]
         #seekword = "%"+request.POST["q"]+"%"
         seekword = request.POST["q"]
@@ -114,13 +111,12 @@ def Search(request):
            title = seekfile
            message= "You´re Lucky! We found "+str(count)+ " file"
            pagename = "Wiki/"+title.capitalize()
-           entry = title.upper()
+           Searchentry = title.upper()
            print(f"Achei arquivo : ",arquivo, message , pagename, title)
            context = {
-                     "entry" :entry,
+                     "Searchentry" :Searchentry,
                      "pagename": pagename,
                      "title": title,
-                     "tipo": tipo,
                      "message":message,
                      "content":util.get_entry(title=title)
                      }
@@ -139,22 +135,22 @@ def Search(request):
                        print(f'Achei :', seekword, "em",meuarquivo )
                        print(f"vou salvar para imprimir: ",title)
                        TitulosAchados.append(title)
-
+                       Searchentry=title.upper()
             context =  {
-               "entry" :entry,
+               "Searchentry" :Searchentry,
                "seekword":seekword,
                "count":count,
                "TitulosAchados": TitulosAchados,
                "encyclopedia": request.session["Pwiki"]
                }
-            return render(request, "encyclopedia/SearchResults.html", context)
+            return render(request, "encyclopedia/Search.html", context)
         if count == 0:
             context = {
                 "count" : count,
                 "message":"Error 404. No file or Text with this content was found.",
                 "encyclopedia": request.session["Pwiki"]
                 }
-            return render(request, "encyclopedia/SearchResults.html", context)
+            return render(request, "encyclopedia/Search.html", context)
 
 
     else:
@@ -162,7 +158,7 @@ def Search(request):
          "message":"Nao entrei no Post",
          "encyclopedia": request.session["Pwiki"]
         }
-        return render(request, "encyclopedia/SearchResults.html", context)
+        return render(request, "encyclopedia/Search.html", context)
 
 
 
