@@ -14,6 +14,8 @@ class NewEntryForm(forms.Form):
     content = forms.CharField(label="content")
     pagename = forms.CharField(label="pagename")
 
+page=""    
+
 #Index Page return all itens from enciclopedia
 def index(request):
     if "Pwiki" not in request.session:
@@ -69,13 +71,14 @@ unordered lists, links, and paragraphs. You may find using regular expressions i
 """
 def EntryPage(request, entry):
     print("Estou na Entry Page")
-
+    page = "EntryPage"
     title = entry
     pagename = "Wiki/"+title.capitalize()
 
 
 
     context = {
+        "page": page,
         "entry" :title.upper(),
         "pagename": pagename,
         "title": title,
