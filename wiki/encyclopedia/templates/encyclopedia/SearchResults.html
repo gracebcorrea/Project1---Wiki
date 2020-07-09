@@ -17,7 +17,7 @@
          <h2>See all {{count}} results for your research, {{seekword}}</h2>
          <h2>   please click one for details:</h2>
          <ul>
-         {% for title in TitulosComTexto %}
+         {% for title in TitulosAchados %}
                {{ title }}
              <!--<li><a href= "{% url 'encyclopedia:EntryPage' TituloComTexto %}">{{ TituloComTexto }}</a></li>-->
          {% endfor %}
