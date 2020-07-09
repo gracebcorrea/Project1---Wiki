@@ -114,9 +114,10 @@ def Search(request):
            title = seekfile
            message= "You´re Lucky! We found "+str(count)+ " file"
            pagename = "Wiki/"+title.capitalize()
+           entry = title.upper()
            print(f"Achei arquivo : ",arquivo, message , pagename, title)
            context = {
-                     "entry" :title.upper(),
+                     "entry" :entry,
                      "pagename": pagename,
                      "title": title,
                      "tipo": tipo,
@@ -126,7 +127,7 @@ def Search(request):
            return render(request, "encyclopedia/EntryPage.html", context)
 
         else:
-            TitulosComTexto = []
+            TitulosAchados = []
             print(f"lista de arquivos a procurar",filenames)
             for filename in filenames:
                 print(f"Trying to find string :", seekword,"in:", filename)
@@ -140,6 +141,7 @@ def Search(request):
                        TitulosAchados.append(title)
 
             context =  {
+               "entry" :entry,
                "seekword":seekword,
                "count":count,
                "TitulosAchados": TitulosAchados,
