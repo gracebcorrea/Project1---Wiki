@@ -6,22 +6,24 @@
 
 
 {% block body %}
-    {%if count == 0 %}
+
     <h1> {{message}} </h1>
-    {%endif %}
 
-    {%if count > 0 %}
 
-    <form action="{% url 'encyclopedia:Search' %}" method="post">
+  <!--  <form action="{% url 'encyclopedia:Search' %}" method="post">-->
          {% csrf_token %}
-         <h2>See all {{count}} results for your research, {{seekword}}</h2>
-         <h2>   please click one for details:</h2>
-         <ul>
-         {% for Searchentry in TitulosAchados %}
-               {{ Searchentry }}
-             <!--<li><a href= "{% url 'encyclopedia:EntryPage' TituloComTexto %}">{{ TituloComTexto }}</a></li>-->
+         <h2>See all {{count}} results for your search, {{seekword}}</h2>
+         {%if count > 0 %}
+         <h2>   Please click one for details:</h2>
+         {%endif%}
+
+         <ol>
+         {% for titulo in TitulosAchados %}
+
+            <h4 > <li> <a href= "#"    > {{ titulo }} </a> </li> <h4>
+
          {% endfor %}
-          </ul>
-    </form >
-    {%endif %}
+          </ol>
+  <!--  </form >-->
+
 {% endblock %}
