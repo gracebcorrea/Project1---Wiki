@@ -6,16 +6,20 @@
 
 
 {% block body %}
-    <h2>See all results for your research, please click one for details:</h2>
-   {{message}}
+    {%if count == 0 %}
+    <h1> {{message}} </h1>
+    {%endif %}
 
-  <!--  <form action="{% url 'encyclopedia:Search' %}" method="post">
+    {%if count > 0 %}
+
+    <form action="{% url 'encyclopedia:Search' %}" method="post">
+         <h2>See all results for your research, please click one for details:</h2>
          {% csrf_token %}
          <ul>
-         {% for file in filenames %}
+         {% for entry in entries %}
              <li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>
          {% endfor %}
           </ul>
-    </form >  -->
-
+    </form >
+    {%endif %}
 {% endblock %}
