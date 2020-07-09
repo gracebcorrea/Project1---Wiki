@@ -190,10 +190,11 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 """
 def EditPage(request, title, content):
 
-    titletoedit = title
-    contenttoedit = content
-    print("acessing Edit Page" , titletoedit,contenttoedit )
+
     if request.method == "POST":
+        titletoedit = title
+        contenttoedit = content
+        print("acessing Edit Page" , titletoedit,contenttoedit )
 
         print(f"I´m in post from  Edit Page")
         """
@@ -220,7 +221,8 @@ def EditPage(request, title, content):
         """
 
     else:
-        return render(request, "encyclopedia/EditPage.html")
+        
+        return render(request, "encyclopedia/EditPage.html" , {"title":title,"content": content})
 
 
 
