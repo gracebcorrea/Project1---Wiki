@@ -9,25 +9,11 @@
 <!--Entrypage-->
   <h3>{{message}}</h3}
 
+        {% csrf_token %}
+             <h1>{{title}}</h1>
+             <br>
+             <p>{{content}}</p>
 
-  <h1>{{title}}</h1>
-  <br>
-  <p>{{content}}</p>
-  <br> <br> <br>
-
-
-
-  <h3>Would you like to edit this text?</h3>
-
-<!--
-  <br>
-  <form class="form-inline" action=  "{% url 'encyclopedia:EditPage' title content %}">
-      {% csrf_token %}
-      {{ form }}
-      <button type="submit" class="btn btn-success">Edit</button>
-      <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
-  </form>
--->
-
+  
 
 {% endblock %}
