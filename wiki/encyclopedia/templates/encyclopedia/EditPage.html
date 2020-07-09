@@ -25,22 +25,17 @@
 
 <div class ="flex-container"  >
   <div class ="container"  >
-    </<h2> Available Titles for Edition:</h2>
-
-
-
-
-
-
-
-
+    </<h2> Titles for Edition:</h2>
+    {{title}}
+    {{content}}
   </div>
 
 
 
 
 
-    <form  action= "{% url 'encyclopedia:EditPage' %}" method="post">
+    <!--<form  action= "{% url 'encyclopedia:EditPage' title content %}" method="post">
+    <form>
         {% csrf_token %}
 
         <br>
@@ -54,16 +49,11 @@
 
         <br>
         <form class="form-inline">
-             <button type="submit" class="btn btn-success">Save</button>
+             <button type="submit" class="btn btn-success">Edit</button>
              <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
         </form>
-    </form>
+    </form>-->
 </div>
 
-<script>
-    function goback()
-       {
-         window.history.back();
-       }
-</script>
+
 {% endblock %}
