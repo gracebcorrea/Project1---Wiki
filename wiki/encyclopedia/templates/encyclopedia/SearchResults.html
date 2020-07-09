@@ -14,12 +14,12 @@
 
     <form action="{% url 'encyclopedia:Search' %}" method="post">
          {% csrf_token %}
-         <h2>See all {{count}} results for your research, </h2>
+         <h2>See all {{count}} results for your research, {{seekword}}</h2>
          <h2>   please click one for details:</h2>
          <ul>
          {% for TituloComTexto in TitulosComTexto %}
                {{ TituloComTexto }}
-             <!--<li><a href= "{% url 'encyclopedia:EntryPage' entry %}">{{ entry }}</a></li>-->
+             <!--<li><a href= "{% url 'encyclopedia:EntryPage' TituloComTexto %}">{{ TituloComTexto }}</a></li>-->
          {% endfor %}
           </ul>
     </form >
