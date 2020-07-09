@@ -74,7 +74,7 @@ def EntryPage(request, entry):
     title = entry
     pagename = "Wiki/"+title.capitalize()
     tipo="ListEntry"
-    print(title,pagename, tipo)
+
 
     context = {
              "entry" :title.upper(),
@@ -138,6 +138,7 @@ def Search(request):
                     TitulosComTexto.append(title)
 
             context =  {
+               "seekword":seekword,
                "count":count,
                "TituloComTexto": title,
                "TitulosComTexto": TitulosComTexto,
