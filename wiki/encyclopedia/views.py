@@ -103,12 +103,11 @@ def Search(request):
     if request.method == "POST":
         tipo = "Search"
         seekfile = request.POST["q"]
-        seekword = "%"+request.POST["q"]+"%"
+        #seekword = "%"+request.POST["q"]+"%"
+        seekword = request.POST["q"]
         count = 0
         _, filenames = default_storage.listdir("entries")
         arquivo = seekfile+".md"
-
-        print(f"Estou no Post de Search", seekword, arquivo)
 
         if arquivo in filenames:
            count += 1
@@ -127,7 +126,7 @@ def Search(request):
            return render(request, "encyclopedia/EntryPage.html", context)
 
         else:
-            print("Não achei arquivo com este nome",arquivo)
+
             for filename in filenames:
                 arquivo=filename
                 title = re.sub(r"\.md$", "", arquivo) #o título é o nome do arquivo sem extensão
@@ -135,19 +134,12 @@ def Search(request):
                 print("Trying to find string :", seekword,"in:", title)
 
                 try:
-                    with  open(arquivo, "r") as file:
-                        conteudo = arquivo.readlines()
-                        print("entrei no arquivo:", arquivo)
-
-                    print(len(conteudo),conteudo[:256] )
-
-                    if find(seekword) in conteudo:
+                    if check_if_string_in_file(arquivo, seekword):
                         count =+ 1
-                        print(f"achei parte em um arquivo", count, seekword )
+                        print(f"achei parte em um arquivo", count, seekword, str(count) )
 
                         context =  {
                            "pagename" :pagename.upper() ,
-                           "message":"Lista as opções",
                            "entry" :title ,
                            "count" : count,
                            "encyclopedia": request.session["Pwiki"]
@@ -155,16 +147,21 @@ def Search(request):
                         return render(request, "encyclopedia/SearchResults.html", context)
 
                 except:
-                    print( "Nothing on:" , filename)
 
+                    context = {
+                              "count" : count,
+                              "message":"Error 400. Invalid Request, error while trying to find word." + str(count),
+                              "encyclopedia": request.session["Pwiki"]
+                               }
+                    return render(request, "encyclopedia/SearchResults.html", context)
 
             if count == 0:
-               context = {
+                context = {
                       "count" : count,
                       "message":"Error 404. No file or Text with this content was found.",
                       "encyclopedia": request.session["Pwiki"]
-                      }
-               return render(request, "encyclopedia/SearchResults.html", context)
+                       }
+                return render(request, "encyclopedia/SearchResults.html", context)
 
 
     else:
@@ -209,3 +206,16 @@ def insert_line(file_name, line_number, conteudo):
                 out.write(f'\n')
             out.write(line)
     shutil.move(out.name, file_name)
+
+
+
+def check_if_string_in_file(file_name, string_to_search):
+    """ Check if any line in the file contains given string """
+    # Open the file in read only mode
+    with open(file_name, 'r') as read_obj:
+        # Read all lines in the file one by one
+        for line in read_obj:
+            # For each line, check if line contains the string
+            if string_to_search in line:
+                return True
+    return False
