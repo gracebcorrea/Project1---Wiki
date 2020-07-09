@@ -127,20 +127,26 @@ def Search(request):
 
         else:
             TitulosComTexto = []
+            print(f"lista de arquivos a procurar",filenames)
             for filename in filenames:
-                print("Trying to find string :", seekword,"in:", filename)
-                if check_if_string_in_file(filename, seekword) == True:
-                    count =+ 1
-                    title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                print(f"Trying to find string :", seekword,"in:", filename)
 
-                    print(f"achei parte em um arquivo", seekword, str(count), arquivo )
+                with open(filename) as myfile:
+                   print ("Vou abrir: ", filename)
+                   if seekword in myfile.read():
+                       count =+ 1
+                       title = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
+                       print(f'Achei :', seekword)
+                       print(f"vou salvar para imprimir: ",title)
+                       TitulosComTexto.append(title)
 
-                    TitulosComTexto.append(title)
+            print(TitulosComTexto)
+
 
             context =  {
                "seekword":seekword,
                "count":count,
-               "TituloComTexto": title,
+               "title":title,
                "TitulosComTexto": TitulosComTexto,
                "encyclopedia": request.session["Pwiki"]
                }
