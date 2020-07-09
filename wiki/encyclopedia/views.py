@@ -183,7 +183,11 @@ def RandomPage(request):
 #Once the entry is saved, the user should be redirected back to that entry’s page.
 
 def EditPage(request):
-    return (request, "encyclopedia/EditPage.html",{"message":"Edit Page"})
+    if request.method == "POST":
+        return (request, "encyclopedia/EditPage.html",{"message":"to no post"})
+
+    else:
+        return (request, "encyclopedia/EditPage.html",{"message":"não estou no post"})
 
 
 
