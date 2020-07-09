@@ -2,9 +2,68 @@
 
 {% block title %}
     Edit Page
+
 {% endblock %}
 
 {% block body %}
 
+<style>
+  input[type=text] {
+       width: 200px;
+       margin: 30px 0;
+    }
 
+  textarea[type=text] {
+       margin: 30px 0;
+       width:90%
+      /* rows="10";
+       cols="30";*/
+
+    }
+
+</style>
+
+<div class ="flex-container"  >
+  <div class ="container"  >
+    </<h2> Available Titles for Edition:</h2>
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+    <form  action= "{% url 'encyclopedia:EditPage' %}" method="post">
+        {% csrf_token %}
+
+        <br>
+        <label for="EditTitle"><b>Title Name :</b></label>
+
+        <input type="text" class="form-control" id="EditTitle" name="EditTitle" placeholder="Title for research" required>
+
+        <br>
+        <label for="EditContent"><b>Your New Encyclopedia Item :</b></label>
+        <textarea type="text" class="form-control" id="EditContent" name="EditContent" placeholder="Place here your information" required ></textarea>
+
+        <br>
+        <form class="form-inline">
+             <button type="submit" class="btn btn-success">Save</button>
+             <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
+        </form>
+    </form>
+</div>
+
+<script>
+    function goback()
+       {
+         window.history.back();
+       }
+</script>
 {% endblock %}
