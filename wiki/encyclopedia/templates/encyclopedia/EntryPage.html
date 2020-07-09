@@ -5,18 +5,19 @@
 {% endblock %}
 
 {% block body %}
+<h3>{{message}}</h3>
 
-<!--Entrypage-->
-  <h3>{{message}}</h3}
-
-  {% csrf_token %}
   <h1>{{title}}</h1>
      <br>
      <p>{{content}}</p>
      <br>
-     <form class="form-inline">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
-     </form>  
+
+<form class="form-inline" style="position:relative; top:150px" action= "{% url 'encyclopedia:EditPage' %}">
+  {% csrf_token %}
+
+    <button type="submit" class="btn btn-success">Edit</button>
+    <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
+
+</form>
 
 {% endblock %}
