@@ -79,8 +79,6 @@ def EntryPage(request, entry):
         "pagename": pagename,
         "title": title,
         "content":html,
-
-        #"content":util.get_entry(title=title)
         }
     return render(request, "encyclopedia/EntryPage.html", context)
 
@@ -171,32 +169,33 @@ The textarea should be pre-populated with the existing Markdown content of the p
 The user should be able to click a button to save the changes made to the entry.
 Once the entry is saved, the user should be redirected back to that entry’s page.
 """
+
 def EditPage(request):
     if request.method == "POST":
         title= request.POST["title"]
         content = util.get_entry(title=title)
 
         NewTitle = title
-        #NewContent = request.POST["NewContent"]
+        NewContent = request.POST["NewContent"]
 
 
         print("Estou no Post do Edit Page" , title,content )
-    #    print("Vou gravar novo conteúdo" , NewTitle, NewContent)
+        print("Vou gravar novo conteúdo" , NewTitle, NewContent)
 
         #filename= default_storage.open(f"entries/{title}.md")
 
         #with open(filename, 'w+',) as Myfile:
         #    MyFile.seek(0,0)
         #    MyFile.write(NewContent+"\n")
-
-
-        context = {
-                "title": title,
-                "content":content,
-                "Newtitle":NewTitle,
-            #    "NewContent":NewContent
+        context={
+                 "entry": title.upper(),
+                 "entries":util.save_entry(title, NewContent),
+                 "entries": util.list_entries(),
+                 "encyclopedia": request.session["Pwiki"]
                 }
-        return render(request, "encyclopedia/EditPage.html",context)
+
+
+        return render(request,"encyclopedia/EntryPage.html",context)
 
     else:
         context ={
