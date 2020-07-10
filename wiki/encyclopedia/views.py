@@ -137,8 +137,6 @@ def Search(request):
                         print(f"vou salvar para imprimir: ",titulo , str(count))
                         TitulosAchados.append(titulo)
 
-
-
                     #    Searchentry=title.upper()
             if count == 0:
                 context ={
@@ -182,16 +180,19 @@ def RandomPage(request):
 #The user should be able to click a button to save the changes made to the entry.
 #Once the entry is saved, the user should be redirected back to that entry’s page.
 
-def EditPage(request,title):
+def EditPage(request):
+
+
     if request.method == "POST":
-        OldTitle = request.POST["title"]
+        OldTitle= request.POST["title"]
+        OldText = request.POST["content"]
 
-
+        print("Estou no Post do Edit Page" , OldTitle)
 
         context = {
                 "title": OldTitle,
-                #"content":content,
-                "message":"To no post"
+                "content":OldText,
+
                 }
         return render(request, "encyclopedia/EditPage.html",context)
 
@@ -220,6 +221,11 @@ def insert_line(file_name, line_number, conteudo):
     shutil.move(out.name, file_name)
 
 
+
+
+
+
+#utils for add latter
 
 def check_if_string_in_file(file_name, string_to_search):
     """ Check if any line in the file contains given string """
