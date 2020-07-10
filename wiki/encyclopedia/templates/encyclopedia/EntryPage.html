@@ -24,15 +24,16 @@
 
 
 <form class="form-inline" style="position:relative; top:100px"
-      action="{% url 'encyclopedia:EditPage' %}"  method="post" >
+      action="{% url 'encyclopedia:EditPage' %}" method="post" >
     {% csrf_token %}
-
+    {{form}}
     <p hidden> <input  type="text"     name="title"   id={{title}}   value={{title}}></p>
     <p hidden> <input  type="textarea" name="content" id={{content}} value={{content}}></p>
 
-    <button type="submit" class="btn btn-success">Edit</button>
+    <button type="submit" class="btn btn-success">
+      <a href="{% url 'encyclopedia:EditPage' %}">Edit</button></a>
     <button type="button" class="btn btn-danger">
-      <a href="{% url 'encyclopedia:index' %}">Cancel</button>
+      <a href="{% url 'encyclopedia:index' %}">Cancel</button></a>
 
 </form>
 
