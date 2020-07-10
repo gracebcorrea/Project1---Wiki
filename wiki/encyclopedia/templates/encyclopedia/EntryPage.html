@@ -12,11 +12,14 @@
      <p>{{content}}</p>
      <br>
 
-<form class="form-inline" style="position:relative; top:150px" action= "{% url 'encyclopedia:EditPage' %}">
+<form class="form-inline" style="position:relative; top:150px" id={{title}} name={{title}}
+      action="{% url 'encyclopedia:EditPage' title=title %}"  method="post" >
   {% csrf_token %}
 
-    <button type="submit" class="btn btn-success">Edit</button>
-    <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
+  <button type="submit" class="btn btn-success" >Edit</button>
+
+  <button type="button" class="btn btn-danger">
+    <a href="{% url 'encyclopedia:index' %}">Cancel</button>
 
 </form>
 
