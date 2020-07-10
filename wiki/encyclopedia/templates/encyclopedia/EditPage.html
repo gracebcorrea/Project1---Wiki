@@ -35,11 +35,11 @@ h2 {
 
 <form  action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
     {% csrf_token %}
-    <p hidden> <input  type="text"  name="Newtitle" id={{title}} value={{title}}></p>
+    <p hidden> <input  type="text"  name="NewTitle" id={{title}} value={{title}}></p>
 
     <label for="NewContent"><b>Please write your changes here :</b></label>
     <p>
-    <textarea type="text" name="NewContent" id="NewContent" value="NewContent" ></textarea>
+    <textarea type="text" name="NewContent" id="NewContent" Placeholder="Edit your text here"></textarea>
     </p>
 
     <form class="form-inline" >
