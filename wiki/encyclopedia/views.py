@@ -181,39 +181,32 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 
 def EditPage(request):
     if request.method == "POST":
-        title= request.POST["title"]
-        content = util.get_entry(title=title)
+        Etitle= request.POST["title"]
+        content = request.POST["content"]
+        Econtent = request.POST["Econtent"]
 
-        NewTitle = title
-        NewContent = request.POST["NewContent"]
+        print("Estou no Post do Edit Page:" , Etitle, "conteudo antigo", content )
+        print("Tentando salvar conteudo novo:", Econtent)
+
+        pagename = "Wiki/"+Etitle.capitalize()
+        filename =  f"entries/{Etitle}.md"
+        with open (filename, "w+") as myfile:
+            myfile.seek(0,0)
+            myfile.write(Econtent)
 
 
-        print("Estou no Post do Edit Page" , title,content )
-        print("Vou gravar novo conteúdo" , NewTitle, NewContent)
 
-        #filename= default_storage.open(f"entries/{title}.md")
-
-        #with open(filename, 'w+',) as Myfile:
-        #    MyFile.seek(0,0)
-        #    MyFile.write(NewContent+"\n")
         context={
-                 "entry": title.upper(),
-                 "entries":util.save_entry(title, NewContent),
-                 "entries": util.list_entries(),
-                 "encyclopedia": request.session["Pwiki"]
+                "pagename":pagename,
+                "entry": Etitle.upper(),
+                "title":Etitle ,
+                "content":content
+
                 }
-
-
-        return render(request,"encyclopedia/EntryPage.html",context)
+        return render(request, "encyclopedia/EditPage.html", context)
 
     else:
-        context ={
-                "title": None,
-                "content":None,
-                "Newtitle":None,
-                "NewContent":None
-                }
-        return render(request, "encyclopedia/EditPage.html",context)
+        return render(request, "encyclopedia/EditPage.html")
 
 
 #Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
