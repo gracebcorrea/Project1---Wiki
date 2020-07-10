@@ -12,14 +12,24 @@
      <p>{{content}}</p>
      <br>
 
-<form class="form-inline" style="position:relative; top:150px" id={{title}} name={{title}}
-      action="{% url 'encyclopedia:EditPage' title=title %}"  method="post" >
-  {% csrf_token %}
 
-  <button type="submit" class="btn btn-success" >Edit</button>
 
-  <button type="button" class="btn btn-danger">
-    <a href="{% url 'encyclopedia:index' %}">Cancel</button>
+
+
+<!--DATA TO THE EDIT PAGE-->
+<!--The app was confunding the parameter with the url with the path of the <fieldset>
+  so i found this way to pass the info i want without having to search for the file again
+ -->
+
+<form class="form-inline" style="position:relative; top:150px"
+      action="{% url 'encyclopedia:EditPage' %}"  method="post" >
+    {% csrf_token %}
+
+    <p hidden> <input  type="text"     name="title"   id={{title}}   value={{title}}></p>
+    <p hidden> <input  type="textarea" name="content" id={{content}} value={{content}}></p>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
 
 </form>
 
