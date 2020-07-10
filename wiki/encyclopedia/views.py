@@ -164,25 +164,13 @@ def Search(request):
             }
         return render(request, "encyclopedia/Search.html", context)
 
-
-
-
-#Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
-
-def RandomPage(request):
-    if request.method == "GET":
-        return HttpResponse("Error. Wrong request method for Random")
-    else:
-        return HttpResponseRedirect(reverse("RandomPage"))
-
-#Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
-#The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
-#The user should be able to click a button to save the changes made to the entry.
-#Once the entry is saved, the user should be redirected back to that entry’s page.
-
+"""
+Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
+The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
+The user should be able to click a button to save the changes made to the entry.
+Once the entry is saved, the user should be redirected back to that entry’s page.
+"""
 def EditPage(request):
-
-
     if request.method == "POST":
         OldTitle= request.POST["title"]
         OldText = request.POST["content"]
@@ -204,7 +192,13 @@ def EditPage(request):
         return render(request, "encyclopedia/EditPage.html",context)
 
 
+#Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
 
+def RandomPage(request):
+    if request.method == "GET":
+        return HttpResponse("Error. Wrong request method for Random")
+    else:
+        return HttpResponseRedirect(reverse("RandomPage"))
 
 
 #insert text on the file in any line
