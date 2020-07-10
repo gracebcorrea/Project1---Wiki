@@ -1,11 +1,11 @@
 # ZChoco
 
--choco
+-choco\r\n
 
--chocolate
+-chocolate\r\n
 
--chocolatra
+-chocolatra\r\n
 
--chocou
+-chocou\r\n
 
--cocoa
+-cocoa\r\n
