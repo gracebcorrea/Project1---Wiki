@@ -28,8 +28,9 @@
     <p hidden> <input  type="text"     name="title"   id={{title}}   value={{title}}></p>
     <p hidden> <input  type="textarea" name="content" id={{content}} value={{content}}></p>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
+    <button type="submit" class="btn btn-success">Edit</button>
+    <button type="button" class="btn btn-danger">
+      <a href="{% url 'encyclopedia:index' %}">Cancel</button>
 
 </form>
 
