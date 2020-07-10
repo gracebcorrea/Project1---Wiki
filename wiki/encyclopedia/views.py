@@ -3,7 +3,7 @@ import shutil, tempfile, os, os.path, re
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse, path
+from django.urls import reverse, path, NoReverseMatch
 from django.core.files.storage import default_storage
 
 from . import util, views
@@ -182,16 +182,25 @@ def RandomPage(request):
 #The user should be able to click a button to save the changes made to the entry.
 #Once the entry is saved, the user should be redirected back to that entry’s page.
 
-def EditPage(request):
+def EditPage(request,title):
     if request.method == "POST":
+        OldTitle = request.POST["title"]
 
 
-        context = {"message":"To no post"}
-        return (request, "encyclopedia/EditPage.html",context)
+
+        context = {
+                "title": OldTitle,
+                #"content":content,
+                "message":"To no post"
+                }
+        return render(request, "encyclopedia/EditPage.html",context)
 
     else:
-        context ={"message":"Não estou no post"}
-        return (request, "encyclopedia/EditPage.html",context)
+        context ={
+                "title": None,
+                "content":None,
+                }
+        return render(request, "encyclopedia/EditPage.html",context)
 
 
 
