@@ -1,5 +1,4 @@
-import shutil, tempfile, os, os.path, re
-
+import shutil, tempfile, os, os.path, re, markdown
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -72,14 +71,16 @@ def EntryPage(request, entry):
 
     title = entry
     pagename = "Wiki/"+title.capitalize()
-
-
+    content = util.get_entry(title=title)
+    html = markdown.markdown(content)
 
     context = {
         "entry" :title.upper(),
         "pagename": pagename,
         "title": title,
-        "content":util.get_entry(title=title)
+        "content":content;
+        "html"=html
+        #"content":util.get_entry(title=title)
         }
     return render(request, "encyclopedia/EntryPage.html", context)
 
@@ -173,9 +174,9 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 def EditPage(request):
     if request.method == "POST":
         OldTitle= request.POST["title"]
-        OldText = request.POST["content"]
-
+        OldText = util.get_entry(title=OldTitle)
         print("Estou no Post do Edit Page" , OldTitle, OldText)
+
 
         context = {
                 "title": OldTitle,
