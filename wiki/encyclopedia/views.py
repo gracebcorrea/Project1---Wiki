@@ -187,7 +187,7 @@ def EditPage(request):
         OldTitle= request.POST["title"]
         OldText = request.POST["content"]
 
-        print("Estou no Post do Edit Page" , OldTitle)
+        print("Estou no Post do Edit Page" , OldTitle, OldText)
 
         context = {
                 "title": OldTitle,
