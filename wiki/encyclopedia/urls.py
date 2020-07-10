@@ -10,7 +10,7 @@ urlpatterns = [
     path("wiki/<str:entry>", views.EntryPage, name="EntryPage"),
     path("Search", views.Search, name="Search"),
     path("RandomPage", views.RandomPage, name="RandomPage"),
-    path("EditPage", views.EditPage, name="EditPage")
+    path("wiki/<str:title>", views.EditPage, name="EditPage")
 
 
 
