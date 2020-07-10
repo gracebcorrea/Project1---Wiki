@@ -5,7 +5,19 @@
 {% endblock %}
 
 {% block body %}
-  {{message}}
+{% csrf_token %}
+<h3>{{message}}</h3>
+
+<h2>This is what you Have:</h2>
+    <h3>{{title}}</h3>
+    <br>
+    <p>{{content}}</p>
+    <br>
+
+<h2>What do you want to change:</h2>
+
+
+
 
 
 {% endblock %}
