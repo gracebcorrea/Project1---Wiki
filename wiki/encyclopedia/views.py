@@ -78,8 +78,8 @@ def EntryPage(request, entry):
         "entry" :title.upper(),
         "pagename": pagename,
         "title": title,
-        "content":content;
-        "html"=html
+        "content":html,
+
         #"content":util.get_entry(title=title)
         }
     return render(request, "encyclopedia/EntryPage.html", context)
@@ -173,15 +173,28 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 """
 def EditPage(request):
     if request.method == "POST":
-        OldTitle= request.POST["title"]
-        OldText = util.get_entry(title=OldTitle)
-        print("Estou no Post do Edit Page" , OldTitle, OldText)
+        title= request.POST["title"]
+        content = util.get_entry(title=title)
+
+        NewTitle = title
+        #NewContent = request.POST["NewContent"]
+
+
+        print("Estou no Post do Edit Page" , title,content )
+    #    print("Vou gravar novo conteúdo" , NewTitle, NewContent)
+
+        #filename= default_storage.open(f"entries/{title}.md")
+
+        #with open(filename, 'w+',) as Myfile:
+        #    MyFile.seek(0,0)
+        #    MyFile.write(NewContent+"\n")
 
 
         context = {
-                "title": OldTitle,
-                "content":OldText,
-
+                "title": title,
+                "content":content,
+                "Newtitle":NewTitle,
+            #    "NewContent":NewContent
                 }
         return render(request, "encyclopedia/EditPage.html",context)
 
@@ -189,6 +202,8 @@ def EditPage(request):
         context ={
                 "title": None,
                 "content":None,
+                "Newtitle":None,
+                "NewContent":None
                 }
         return render(request, "encyclopedia/EditPage.html",context)
 
