@@ -37,16 +37,25 @@ page.
 def NewPage(request):
     if request.method == "POST":
         print(f"Entrei no post do New Page")
+
         title = request.POST["NewTitle"]
         content = request.POST["NewContent"]
         rastag = "# "+title
+        pagename = "Wiki/"+title.capitalize()
 
-        return render(request,"encyclopedia/index.html",{
+        html = markdown.markdown(content)
+
+        context={
+             "pagename":pagename,
+             "entry":title.upper(),
+             "title":title,
+             "content":content,
              "entries":util.save_entry(title=title, content=content),
              "entries":insert_line(file_name=f"entries/{title}.md", line_number= 1, conteudo=rastag),
-             "entries": util.list_entries(),
              "encyclopedia": request.session["Pwiki"]
-        })
+        }
+
+        return render(request,"encyclopedia/EntryPage.html",context)
     else:
         return render(request, "encyclopedia/NewPage.html")
 
