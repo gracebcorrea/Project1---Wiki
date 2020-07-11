@@ -10,7 +10,5 @@ urlpatterns = [
     path("Search", views.Search, name="Search"),
     path("RandomPage", views.RandomPage, name="RandomPage"),
     path("EditPage", views.EditPage, name="EditPage"),
-    path("Wiki/<str:entry>", views.EntryPage, name="EntryPage")
-
-
+    path("Wiki/<str:entry>", views.EntryPage, name="EntryPage"),
 ]
