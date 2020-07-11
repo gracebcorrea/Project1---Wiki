@@ -1,0 +1,61 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Edit Page
+{% endblock %}
+
+{% block body %}
+<style>
+  input[type=text] {
+       width: 200px;
+       margin: 30px 0;
+    }
+
+  textarea[type=text] {
+       margin: 30px 0;
+       rows:"5";
+       cols:"20";
+       maxlength:"250";
+       width:80%;
+    }
+h2 {
+   color: blue;
+  }
+</style>
+
+
+<h2>This is what you Have:</h2>
+    <h4>{{title}}</h4>
+    <br>
+    <p>{{content}}</p>
+    <br>
+
+<h2>What do you want to change?</h2>
+<br>
+
+<form  action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
+    {% csrf_token %}
+    {{ form }}
+    <p hidden> <input  type="text"  name="title" id={{title}} value={{title}}></p>
+    <p hidden> <input  type="text"  name="entry" id={{entry}} value={{entry}}></p>
+    <p hidden> <input  type="text"  name="content" id={{content}} value={{content}}></p>
+
+    <label for="Econtent"><b>Please write your changes here :</b></label>
+    <p>
+    <textarea type="text" class="form-control" name="Econtent"  required>
+    </textarea>
+    </p>
+</form>
+<h3>{{message}}</h3>
+<form class="form-inline">
+         <button type="submit" class="btn btn-success" >
+         <a href="{% url 'encyclopedia:EntryPage' entry %}"> Update </button></a>
+         <button type="button" class="btn btn-danger">
+         <a href="{% url 'encyclopedia:index' %}"> Cancel</button></a>
+</form>
+
+
+
+
+
+{% endblock %}
