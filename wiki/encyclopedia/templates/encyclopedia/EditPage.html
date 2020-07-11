@@ -25,21 +25,22 @@
 
 <h2>What do you want to change?</h2>
 <br>
-
+<h3>{{message}}</h3>
 <form  action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
     {% csrf_token %}
     {{ form }}
     <p hidden> <input  type="text"  name="title" id={{title}} value={{title}}></p>
     <p hidden> <input  type="text"  name="entry" id={{entry}} value={{entry}}></p>
+    <p hidden> <input  type="text"  name="content" id={{content} value={{content}}></p>
 
     <label for="Econtent"><b>Please write your changes here :</b></label>
     <p>
-    <textarea type="text" class="form-control" name="content" id="content" required>
+    <textarea type="text" class="form-control" name="Econtent" id="Econtent" ng-model="Econtent"required>
      {{content}}
     </textarea>
     </p>
 </form>
-<h3>{{message}}</h3>
+<p>{{ncontent}}</p>
 <form class="form-inline" style="position:relative; top:100px">
          <button type="submit" class="btn btn-success" >
          <a href="{% url 'encyclopedia:EntryPage' entry %}"> Update </button></a>
