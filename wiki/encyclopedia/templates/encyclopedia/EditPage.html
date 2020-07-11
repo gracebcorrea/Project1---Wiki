@@ -13,29 +13,21 @@
 
   textarea[type=text] {
        margin: 30px 0;
-       rows:"7";
-       cols:"20";
-       maxlength:"250";
-       width:80%;
+       rows:"5";
+       cols:"15";
+       resize: none;
     }
 
 </style>
-
-<h2>{{title}}</h2>
-
-<h2>What do you want to change?</h2>
-<br>
 <h3>{{message}}</h3>
 <form  action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
-    {% csrf_token %}
-    {{ form }}
-    <p hidden> <input  type="text"  name="title" id={{title}} value={{title}}></p>
-    <p hidden> <input  type="text"  name="entry" id={{entry}} value={{entry}}></p>
-    <p hidden> <input  type="text"  name="content" id={{content} value={{content}}></p>
+  {% csrf_token %}
+  {{ form }}
 
+    <p hidden> <input  type="text"  name="title"   id={{title}}   value={{title}}><h2>{{title}}</h2></p>
     <label for="Econtent"><b>Please write your changes here :</b></label>
     <p>
-    <textarea type="text" class="form-control" name="Econtent" id="Econtent" ng-model="Econtent"required>
+    <textarea type="text" name="Econtent" id="Econtent" ng-model="Econtent"required>
      {{content}}
     </textarea>
     </p>
@@ -43,7 +35,7 @@
 <p>{{ncontent}}</p>
 <form class="form-inline" style="position:relative; top:100px">
          <button type="submit" class="btn btn-success" >
-         <a href="{% url 'encyclopedia:EntryPage' entry %}"> Update </button></a>
+         <a href="{% url 'encyclopedia:EntryPage' entry %}">Update </button></a>
          <button type="button" class="btn btn-danger">
          <a href="{% url 'encyclopedia:index' %}"> Cancel</button></a>
 </form>
