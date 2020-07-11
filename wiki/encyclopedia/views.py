@@ -15,12 +15,12 @@ class NewEntryForm(forms.Form):
     Econtent = forms.CharField(label="Econtent")
     entry = forms.CharField(label="entry")
 
-entry=""
+
 #Index Page return all itens from enciclopedia
 def index(request):
     if "Pwiki" not in request.session:
         request.session["Pwiki"] = []
-        request.session["Pwiki"] = "Pwiki"
+    
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries() ,
         "encyclopedia": request.session["Pwiki"]
@@ -206,7 +206,6 @@ def EditPage(request):
     else:
         context = {
                 "message":"Empty Form didn´t get into POST",
-        
         }
 
         return render(request, "encyclopedia/EditPage.html" ,context)
