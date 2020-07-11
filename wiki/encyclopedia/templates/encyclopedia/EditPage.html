@@ -19,24 +19,21 @@
     }
 
 </style>
+
+{% csrf_token %}
 <h3>{{message}}</h3>
 
-<h2>{{title}}</h2>
+<h2>{{entry}}</h2>
 
-<form action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
-    {% csrf_token %}
-    <label for="Econtent"><b>Please write your changes here :</b></label>
-    <br>
-    <textarea type="text" name="Econtent" ng-model="Econtent"required>{{content}}</textarea>
-           <p>{{Econtent}}</p>
+{{content}}
+
+
+
+<form  action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
+    <p hidden> <input  type="text"  name="title" id={{title}} value={{title}}></p>
+    <p hidden> <input  type="text"  name="entry" id={{entry}} value={{entry}}></p>
+    <p hidden> <input  type="text"  name="content" id={{content}} value={{content}}></p>
+
 </form>
-
-<!--
-<form class="form-inline" style="position:relative; top:100px">
-    <button type="submit" class="btn btn-success" >
-    <a href="{% url 'encyclopedia:EntryPage' entry %}">Update </button></a>
-    <button type="button" class="btn btn-danger">
-          <a href="{% url 'encyclopedia:index' %}"> Cancel</button></a>
-</form>-->
 
 {% endblock %}
