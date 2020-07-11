@@ -13,29 +13,4 @@
      <br>
 
 
-
-
-
-<!--DATA TO THE EDIT PAGE-->
-<!--The app was confunding the parameter with the url with the path of the <fieldset>
-  so i found this way to pass the info i want without having to search for the file again
- -->
-
-
-
-<form class="form-inline" style="position:relative; top:100px"
-      action="{% url 'encyclopedia:EditPage' %}" method="post" >
-    {% csrf_token %}
-    {{form}}
-    <p hidden> <input type="text" name="title"   id={{title}}   value={{title}}></p>
-    <p hidden> <input type="text" name="content" id={{content}} value={{content}}></p>
-    <p hidden> <input type="text" name="entry"   id={{title}} value={{title}}></p>
-    <p hidden> <input type="text" name="Econtent" id="Econtent" ></p>
-    <button type="submit" class="btn btn-success">
-      <a href="{% url 'encyclopedia:EditPage' %}">Edit</button></a>
-    <button type="button" class="btn btn-danger">
-      <a href="{% url 'encyclopedia:index' %}">Cancel</button></a>
-
-</form>
-
 {% endblock %}
