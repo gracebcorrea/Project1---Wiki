@@ -173,8 +173,10 @@ def Search(request):
         return render(request, "encyclopedia/Search.html", context)
 
 """
-Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
-The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
+Edit Page: On each entry page, the user should be able to click a link to be taken to a page where
+the user can edit that entry’s Markdown content in a textarea.
+The textarea should be pre-populated with the existing Markdown content of the page.
+(i.e., the existing content should be the initial value of the textarea).
 The user should be able to click a button to save the changes made to the entry.
 Once the entry is saved, the user should be redirected back to that entry’s page.
 """
@@ -182,10 +184,9 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 def EditPage(request):
     if request.method == "POST":
         Etitle= request.POST["title"]
-        content = request.POST["content"]
-        Econtent = request.POST["Econtent"]
+        Econtent = request.POST["content"]
 
-        print("Estou no Post do Edit Page:" , Etitle, "conteudo antigo", content )
+        print("Estou no Post do Edit Page:" , Etitle)
         print("Tentando salvar conteudo novo:", Econtent)
 
         pagename = "Wiki/"+Etitle.capitalize()
@@ -194,14 +195,11 @@ def EditPage(request):
             myfile.seek(0,0)
             myfile.write(Econtent)
 
-
-
         context={
                 "pagename":pagename,
                 "entry": Etitle.upper(),
                 "title":Etitle ,
-                "content":content
-
+                "content":Econtent
                 }
         return render(request, "encyclopedia/EditPage.html", context)
 
