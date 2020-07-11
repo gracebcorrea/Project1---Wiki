@@ -107,7 +107,9 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 
 def EditPage(request):
     if request.method == "POST":
-        Etitle= request.POST["title"]
+
+        Etitle= request.POST["entry"]
+        """
         content = request.POST["content"]
         Econtent = request.POST["Econtent"]
 
@@ -130,10 +132,19 @@ def EditPage(request):
                      "encyclopedia": request.session["Pwiki"]
                 }
             return render(request, "encyclopedia/EntryPage.html", context)
-        else:
-            return render(request, "encyclopedia/EditPage.html",{"message":" The content is empty, please try again"})
+            """
+        context = {
+                "message":" Estou no Post do edit",
+                "entry":title
+        }
+
+        return render(request, "encyclopedia/EditPage.html",context)
+
+
+    #    else:
+    #        return render(request, "encyclopedia/EditPage.html",{"message":" The content is empty, please try again"})
     else:
-        return render(request, "encyclopedia/EditPage.html")
+        return render(request, "encyclopedia/EditPage.html" , {"message":"Empty Form"})
 
 
 """
