@@ -20,28 +20,23 @@
 
 </style>
 <h3>{{message}}</h3>
-<form  action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
-  {% csrf_token %}
-  {{ form }}
 
-    <p hidden> <input  type="text"  name="title"   id={{title}}   value={{title}}><h2>{{title}}</h2></p>
+<h2>{{title}}</h2>
+
+<form action="{% url 'encyclopedia:EditPage' %}"  method="post" width=90% >
+    {% csrf_token %}
     <label for="Econtent"><b>Please write your changes here :</b></label>
-    <p>
-    <textarea type="text" name="Econtent" id="Econtent" ng-model="Econtent"required>
-     {{content}}
-    </textarea>
-    </p>
+    <br>
+    <textarea type="text" name="Econtent" ng-model="Econtent"required>{{content}}</textarea>
+           <p>{{Econtent}}</p>
 </form>
-<p>{{ncontent}}</p>
+
+<!--
 <form class="form-inline" style="position:relative; top:100px">
-         <button type="submit" class="btn btn-success" >
-         <a href="{% url 'encyclopedia:EntryPage' entry %}">Update </button></a>
-         <button type="button" class="btn btn-danger">
-         <a href="{% url 'encyclopedia:index' %}"> Cancel</button></a>
-</form>
-
-
-
-
+    <button type="submit" class="btn btn-success" >
+    <a href="{% url 'encyclopedia:EntryPage' entry %}">Update </button></a>
+    <button type="button" class="btn btn-danger">
+          <a href="{% url 'encyclopedia:index' %}"> Cancel</button></a>
+</form>-->
 
 {% endblock %}
