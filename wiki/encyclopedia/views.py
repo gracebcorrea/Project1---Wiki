@@ -12,6 +12,9 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="title")
     content = forms.CharField(label="content")
     pagename = forms.CharField(label="pagename")
+    Econtent = forms.CharField(label="Econtent")
+    entry = forms.CharField(label="entry")
+
 
 #Index Page return all itens from enciclopedia
 def index(request):
@@ -46,6 +49,7 @@ def NewPage(request):
         html = markdown.markdown(content)
 
         context={
+             "page": "EntryPage",
              "pagename":pagename,
              "entry":title.upper(),
              "title":title,
@@ -77,7 +81,7 @@ unordered lists, links, and paragraphs. You may find using regular expressions i
 """
 def EntryPage(request, entry):
     print("Estou na Entry Page")
-
+    page = "EntryPage"
     title = str(entry)
     pagename = "Wiki/"+title.capitalize()
     content = util.get_entry(title=title)
@@ -88,8 +92,48 @@ def EntryPage(request, entry):
         "pagename": pagename,
         "title": title,
         "content":html,
+        "page": page
         }
     return render(request, "encyclopedia/EntryPage.html", context)
+
+"""
+Edit Page: On each entry page, the user should be able to click a link to be taken to a page where
+the user can edit that entry’s Markdown content in a textarea.
+The textarea should be pre-populated with the existing Markdown content of the page.
+(i.e., the existing content should be the initial value of the textarea).
+The user should be able to click a button to save the changes made to the entry.
+Once the entry is saved, the user should be redirected back to that entry’s page.
+"""
+
+def EditPage(request):
+    if request.method == "POST":
+        Etitle= request.POST["title"]
+        content = request.POST["content"]
+        Econtent = request.POST["Econtent"]
+
+        print("Estou no Post do Edit Page:" , Etitle)
+        print("Tentando salvar conteudo novo:", Econtent)
+        if len(Econtent) >0:
+            pagename = "Wiki/"+Etitle
+            filename =  f"entries/{Etitle}.md"
+            with open (filename, "w") as myfile:
+                myfile.seek(0,0)
+                myfile.write(Econtent)
+                myfile.save()
+
+                context={
+                     "page": "EntryPage",
+                     "pagename":pagename,
+                     "entry":title,
+                     "title":title,
+                     "content":content,
+                     "encyclopedia": request.session["Pwiki"]
+                }
+            return render(request, "encyclopedia/EntryPage.html", context)
+        else:
+            return render(request, "encyclopedia/EditPage.html",{"message":" The content is empty, please try again"})
+    else:
+        return render(request, "encyclopedia/EditPage.html")
 
 
 """
@@ -172,43 +216,6 @@ def Search(request):
             }
         return render(request, "encyclopedia/Search.html", context)
 
-"""
-Edit Page: On each entry page, the user should be able to click a link to be taken to a page where
-the user can edit that entry’s Markdown content in a textarea.
-The textarea should be pre-populated with the existing Markdown content of the page.
-(i.e., the existing content should be the initial value of the textarea).
-The user should be able to click a button to save the changes made to the entry.
-Once the entry is saved, the user should be redirected back to that entry’s page.
-"""
-
-def EditPage(request):
-    if request.method == "POST":
-        Etitle= request.POST["title"]
-        content = request.POST["content"]
-        Econtent = request.POST["Econtent"]
-
-        print("Estou no Post do Edit Page:" , Etitle)
-        print("Tentando salvar conteudo novo:", Econtent)
-        if len(Econtent) >0:
-            pagename = "Wiki/"+Etitle
-            filename =  f"entries/{Etitle}.md"
-            with open (filename, "w+") as myfile:
-                myfile.seek(0,0)
-                myfile.write(Econtent)
-
-            context={
-                "pagename":pagename,
-                "entry": Etitle.upper(),
-                "title":Etitle ,
-                "content":content,
-                }
-            return render(request, "encyclopedia/EditPage.html", context)
-        else:
-            return render(request, "encyclopedia/EditPage.html",{"message":" The content is empty, please try again"})
-
-
-    else:
-        return render(request, "encyclopedia/EditPage.html")
 
 
 #Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
