@@ -29,6 +29,11 @@
                 <div>
                     <a href="{% url 'encyclopedia:RandomPage' %}">Random Page</a>
                 </div>
+                {%if page == "EntryPage" %}
+                <div>
+                    <a href="{% url 'encyclopedia:EditPage' %}">Edit Page</a>
+                </div>
+                {%endif%}
                 {% block nav %}
                 {% endblock %}
             </div>
