@@ -184,7 +184,7 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 def EditPage(request):
     if request.method == "POST":
         Etitle= request.POST["title"]
-        Econtent = request.POST["content"]
+        Econtent = request.POST["Econtent"]
 
         print("Estou no Post do Edit Page:" , Etitle)
         print("Tentando salvar conteudo novo:", Econtent)
