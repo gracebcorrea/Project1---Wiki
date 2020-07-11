@@ -23,16 +23,13 @@
 
 <h3>{{message}}</h3>
 
+<h2> Entry ? {{entry}}</h2>
 
+ <h2>Title ? {{title}}</h2>
 
 <form  action="{% url 'encyclopedia:EditPage'  %}"  method="post" width=90% >
 
    {% csrf_token %}
-
-  <h2> Entry ? {{entry}}</h2>
-
-   <h2>Title ? {{title}}</h2>
-
    <br>
    <label for="NewContent"><b>Change Encyclopedia Item :</b></label>
    <textarea type="text" class="form-control" id="NewContent" name="NewContent" required >{{content}}</textarea>
