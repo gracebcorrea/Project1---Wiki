@@ -78,7 +78,7 @@ unordered lists, links, and paragraphs. You may find using regular expressions i
 def EntryPage(request, entry):
     print("Estou na Entry Page")
 
-    title = entry
+    title = str(entry)
     pagename = "Wiki/"+title.capitalize()
     content = util.get_entry(title=title)
     html = markdown.markdown(content)
@@ -184,24 +184,28 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 def EditPage(request):
     if request.method == "POST":
         Etitle= request.POST["title"]
+        content = request.POST["content"]
         Econtent = request.POST["Econtent"]
 
         print("Estou no Post do Edit Page:" , Etitle)
         print("Tentando salvar conteudo novo:", Econtent)
+        if len(Econtent) >0:
+            pagename = "Wiki/"+Etitle
+            filename =  f"entries/{Etitle}.md"
+            with open (filename, "w+") as myfile:
+                myfile.seek(0,0)
+                myfile.write(Econtent)
 
-        pagename = "Wiki/"+Etitle.capitalize()
-        filename =  f"entries/{Etitle}.md"
-        with open (filename, "w+") as myfile:
-            myfile.seek(0,0)
-            myfile.write(Econtent)
-
-        context={
+            context={
                 "pagename":pagename,
                 "entry": Etitle.upper(),
                 "title":Etitle ,
-                "content":Econtent
+                "content":content,
                 }
-        return render(request, "encyclopedia/EditPage.html", context)
+            return render(request, "encyclopedia/EditPage.html", context)
+        else:
+            return render(request, "encyclopedia/EditPage.html",{"message":" The content is empty, please try again"})
+
 
     else:
         return render(request, "encyclopedia/EditPage.html")
