@@ -29,23 +29,29 @@
                 <div>
                     <a href="{% url 'encyclopedia:RandomPage' %}">Random Page</a>
                 </div>
-                {%if page == "Entry Page"%}
-                    <form action= "{% url 'encyclopedia:EditPage' %}" method="post">
+                {%if page == "EntryPage"%}
+                    <form action= "{% url 'encyclopedia:EditPage'%}" method="post">
                          {% csrf_token %}
-                         <p hidden><input class="search" type="text" name="entry" id="entry" value={{entry}}></p>
+                         <input type="hidden" name="PassaTitulo" id="PassaTitulo" value={{entry}} >
                          <div>
-                         <a href="{% url 'encyclopedia:EditPage' %}" >Edit Page</a>
+                         <a href="{% url 'encyclopedia:EditPage' %}" >Edit Title {{entry}}</a>
                          </div>
-                         </form>
-                {%endif%}
 
-                {% block nav %}
-                {% endblock %}
+                    </form>
+                {%endif%}
+            {% block nav %}
+            {% endblock %}
             </div>
-            <div class="main col-lg-10 col-RandomPagemd-9">
-                {% block body %}
-                {% endblock %}
+
+
+
+           <div class="main col-lg-10 col-RandomPagemd-9">
+               {% block body %}
+               {% endblock %}
+           </div>
+
             </div>
+
         </div>
 
     </body>
