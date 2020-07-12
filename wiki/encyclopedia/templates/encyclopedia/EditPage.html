@@ -27,7 +27,7 @@
 <h2>{{title}}</h2>
 <br>
 
-<form  action="{% url 'encyclopedia:EditPage' {{title}}  %}"  method="post" width=90% >
+<form  action="{% url 'encyclopedia:EditPage' title=title %}"  method="post" width=90% >
    {% csrf_token %}
 
    <h4>Change Encyclopedia Item :</h4>
