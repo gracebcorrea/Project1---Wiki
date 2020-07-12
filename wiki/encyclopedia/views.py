@@ -188,7 +188,7 @@ def EditPage(request):
                      "content":content,
                      "encyclopedia": request.session["Pwiki"]
                 }
-            return render(request, "encyclopedia/EntryPage.html", context)
+            return render(request, "encyclopedia/EditPage.html", context)
             """
         context = {
                 "title": title,
@@ -197,7 +197,7 @@ def EditPage(request):
                 "encyclopedia": request.session["Pwiki"]
         }
 
-        return render(request, "encyclopedia/EntryPage.html",context)
+        return render(request, "encyclopedia/EditPage.html",context)
 
 
     #    else:
