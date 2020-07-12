@@ -13,27 +13,15 @@
      <br>
 
 
-<form action="{% url 'encyclopedia:EditPage' %}"    method="post">
-     {% csrf_token %}
-     <input  type="hidden"  name="title" id={{title}} value={{title}}>
-     <input  type="hidden"  name="entry" id={{entry}} value={{entry}}>
-     <input  type="hidden"  name="content" id={{content}} value={{content}}>
-
-     <form class="form-inline" style="position:relative; top:100px">
-          <button type="submit" class="btn btn-success" onclick="GetTitle()">Change Content</button>
-          <button type="button" class="btn btn-danger">
-            <a href="{% url 'encyclopedia:index' %}">Cancel</button>
-     </form>
+<form class="form-inline" style="position:relative; top:100px" method=post>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success" >
+        <a href="{% url 'encyclopedia:EditPage' title %}">Change Content {{title}}</button>
+    <button type="button" class="btn btn-danger">
+        <a href="{% url 'encyclopedia:index' %}">Cancel</button>
 </form>
 
 
 
-<script>
-function GetTitle() {
-  var xtitle = document.getElementById("title").value;
-  document.getElementById("EditTitle").innerHTML =xtitle;
-  return EditTitle
-}
-</script>
 
 {% endblock %}
