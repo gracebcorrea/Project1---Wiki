@@ -1,4 +1,4 @@
-import shutil, tempfile, os, os.path, re, markdown
+import shutil, tempfile, os, os.path, re, markdown,random
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,14 +7,14 @@ from django.core.files.storage import default_storage
 
 from . import util, views
 
-
+"""
 class NewEntryForm(forms.Form):
     title = forms.CharField(label="title")
     content = forms.CharField(label="content")
     pagename = forms.CharField(label="pagename")
     NewContent = forms.CharField(label="NewContent")
     entry = forms.CharField(label="entry")
-
+"""
 
 #Index Page return all itens from enciclopedia
 def index(request):
@@ -47,7 +47,7 @@ def NewPage(request):
         context={
              "page": "EntryPage",
              "pagename":pagename,
-             "entry":title.upper(),
+             "entry":title.capitalize(),
              "title":title,
              "content":content,
              "entries":util.save_entry(title=title, content=content),
@@ -84,6 +84,72 @@ def EntryPage(request, entry):
         "encyclopedia": request.session["Pwiki"]
         }
     return render(request, "encyclopedia/EntryPage.html", context)
+
+"""
+Edit Page:  Falta:
+The textarea should be pre-populated with the existing Markdown content of the page.
+(i.e., the existing content should be the initial value of the textarea).
+The user should be able to click a button to save the changes made to the entry.
+Once the entry is saved, the user should be redirected back to that entry’s page.
+"""
+
+def EditPage(request, title):
+    Etitle =  title
+    print("EditPage :", Etitle)
+    if request.method == "POST":
+        Textsize=0
+        Etitle =  title
+        print("Reading:" , "Título:",Etitle)
+
+        content =util.get_entry(Etitle)
+        print("Old Content", content)
+
+        #NewTextArea= request.POST["NewTextArea"]
+        #NewTextArea= request.POST.get("NewTextArea")
+        #Textsize= NewTextArea.count()
+
+        print("Will Save:",Textsize )
+
+
+        if Textsize:
+            pagename = "Wiki/"+Etitle.capitalize()
+            filename =  f"entries/{Etitle}.md"
+            print(pagename, filename)
+
+            with open (filename, "w") as myfile:
+                myfile.seek(0,0)
+                myfile.write(NewTextArea)
+                myfile.save()
+
+            context = {
+                "title": Etitle,
+                "entry": Etitle,
+                "content" : util.get_entry(Etitle),
+                "encyclopedia": request.session["Pwiki"]
+            }
+            return render(request, "encyclopedia/EntryPage.html",context)
+        else:
+            context = {
+                "entry": Etitle,
+                "title": Etitle,
+                "content" : util.get_entry(Etitle),
+                "message":" The New content is empty, please try again",
+                "encyclopedia": request.session["Pwiki"]
+            }
+            return render(request, "encyclopedia/EditPage.html",context)
+    else:
+        context = {
+                "message":"Empty Form didn´t get into POST",
+            }
+        return render(request, "encyclopedia/EditPage.html" ,context)
+
+
+
+
+
+
+
+
 
 
 def Search(request):
@@ -152,70 +218,6 @@ def Search(request):
         return render(request, "encyclopedia/Search.html", context)
 
 
-"""
-Edit Page:  Falta:
-The textarea should be pre-populated with the existing Markdown content of the page.
-(i.e., the existing content should be the initial value of the textarea).
-The user should be able to click a button to save the changes made to the entry.
-Once the entry is saved, the user should be redirected back to that entry’s page.
-"""
-
-def EditPage(request):
-    print("Estou na  Edit Page:")
-
-    if request.method == "POST":
-        entry = str(request.POST["entry"])
-        title = str( request.POST["title"])
-        print("Reading:" , "Título:",title, "Entry:", entry)
-
-        content =util.get_entry(title)
-
-        NewContent= ""       # request.POST["NewContent"]
-        print("Will Save:", NewContent)
-
-
-        if len( NewContent) >0:
-            pagename = "Wiki/"+title
-            filename =  f"entries/{title}.md"
-
-
-            with open (filename, "w") as myfile:
-                myfile.seek(0,0)
-                myfile.write(NewContent)
-                myfile.save()
-
-            context={
-                     "page": "EntryPage",
-                     "pagename":pagename,
-                     "entry":entry,
-                     "title":title,
-                     "content":util.get_entry(title),
-                     "encyclopedia": request.session["Pwiki"]
-                }
-            return render(request, "encyclopedia/EntryPage.html", context)
-
-        context = {
-                "title": title,
-                "entry": entry,
-                "content" : util.get_entry(title),
-                "encyclopedia": request.session["Pwiki"]
-
-        }
-
-        return render(request, "encyclopedia/EditPage.html",context)
-
-
-    #    else:
-    #        return render(request, "encyclopedia/EditPage.html",{"message":" The content is empty, please try again"})
-    else:
-        context = {
-                "message":"Empty Form didn´t get into POST",
-
-            }
-
-        return render(request, "encyclopedia/EditPage.html" ,context)
-
-
 
 
 
@@ -227,7 +229,29 @@ def EditPage(request):
 
 def RandomPage(request):
     if request.method == "GET":
-        return HttpResponse("Error. Wrong request method for Random")
+        Max=0
+        randonposition=0
+        filenames= []
+
+        filenames = util.list_entries()
+        #number or list itens
+        Max= int(len(filenames))
+        #List uses 0 as first file, so i have to count -1 for the range
+        randonposition=(random.randint(0,(Max-1)))
+        drawnfile = str(filenames[randonposition])
+        print("titulo sorteado", drawnfile)
+
+        drawncontent = util.get_entry(drawnfile)
+
+        context = {
+                "Entry":drawnfile.capitalize(),
+                "pagename":drawnfile.capitalize(),
+                "randonposition":randonposition,
+                "title":drawnfile,
+                "content":drawncontent
+         }
+
+        return render(request, "encyclopedia/EntryPage.html" ,context)
     else:
         return HttpResponseRedirect(reverse("RandomPage"))
 
