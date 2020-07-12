@@ -11,4 +11,5 @@ urlpatterns = [
     path("RandomPage", views.RandomPage, name="RandomPage"),
     path("EditPage", views.EditPage, name="EditPage"),
     path("Wiki/<str:entry>", views.EntryPage, name="EntryPage"),
+    path("Wiki/<str:entry>", views.EditPage, name="EditPage"),
 ]
