@@ -23,32 +23,25 @@
 
 <h3>{{message}}</h3>
 
-<h2> Entry ? {{entry}}</h2>
-
- <h2>Title ? {{title}}</h2>
+<h2>{{title}}</h2>
+<br>
 
 <form  action="{% url 'encyclopedia:EditPage'  %}"  method="post" width=90% >
-
    {% csrf_token %}
    {{form}}
-   <label for="NewContent"><h4>Change Encyclopedia Item :</h4></label>
-   <textarea type="text" class="form-control" id="NewContent" name="NewContent" required >{{content}}</textarea>
-
-   <br>
-   <form class="form-inline" style="position:relative; top:100px">
-        <button type="submit" class="btn btn-success" onclick="myFunction()">See New content</button>
-        <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
-
-
-   </form>
+   <label for="content"><h4>Change Encyclopedia Item :</h4></label>
+   <textarea type="text" id="content" name="content" required >{{content}}</textarea>
 </form>
-<p id="NewContetToSave"></p>
-
+<form class="form-inline" style="position:relative">
+    <button type="submit" class="btn btn-success" onclick="myFunction()">See New content</button>
+    <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
+</form>
 
 <script>
 function myFunction() {
   var x = document.getElementById("NewContent").value;
   document.getElementById("NewContetToSave").innerHTML = x;
+  alert(x);
 }
 </script>
 
