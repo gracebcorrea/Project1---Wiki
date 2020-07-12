@@ -20,7 +20,7 @@ class NewEntryForm(forms.Form):
 def index(request):
     if "Pwiki" not in request.session:
         request.session["Pwiki"] = []
-    
+
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries() ,
         "encyclopedia": request.session["Pwiki"]
@@ -162,9 +162,10 @@ Once the entry is saved, the user should be redirected back to that entry’s pa
 
 def EditPage(request):
     print("Estou na  Edit Page:")
+
     if request.method == "POST":
         entry = request.POST["entry"]
-        title = request.POST["PassaTitulo"]
+        title = request.POST["title"]
         print("Estou no Post do Edit Page:" , title)
 
         """
@@ -206,7 +207,8 @@ def EditPage(request):
     else:
         context = {
                 "message":"Empty Form didn´t get into POST",
-        }
+        
+            }
 
         return render(request, "encyclopedia/EditPage.html" ,context)
 
