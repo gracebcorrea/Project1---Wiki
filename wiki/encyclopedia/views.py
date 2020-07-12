@@ -170,7 +170,7 @@ def EditPage(request):
 
         content =util.get_entry(title)
 
-        NewContent= request.POST["NewContent"]
+        NewContent= ""       # request.POST["NewContent"]
         print("Will Save:", NewContent)
 
 
