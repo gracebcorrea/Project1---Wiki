@@ -14,3 +14,27 @@
 
 
 {% endblock %}
+
+<form method="post">
+     {% csrf_token %}
+     <input  type="hidden"  name="title" id={{title}} value={{title}}>
+     <input  type="hidden"  name="entry" id={{entry}} value={{entry}}>
+
+     <form class="form-inline" style="position:relative; top:100px">
+          <button type="submit" class="btn btn-success">
+            <a href="{% url 'encyclopedia:EditPage' %}">Change Content</button>
+          <button type="button" class="btn btn-danger">
+            <a href="{% url 'encyclopedia:index' %}">Cancel</button>
+     </form>
+</form>
+
+
+<p id="EditTitle" >
+
+<script>
+function GetTitle() {
+  var xtitle = document.getElementById("title").value;
+  document.getElementById("EditTitle").innerHTML =xtitle;
+  return EditTitle
+}
+</script>
