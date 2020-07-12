@@ -2,6 +2,7 @@
 
 {% block title %}
     Edit Page
+
 {% endblock %}
 
 {% block body %}
@@ -26,35 +27,32 @@
 <h2>{{title}}</h2>
 <br>
 
-<form  action="{% url 'encyclopedia:EditPage'  %}"  method="post" width=90% >
+<form  action="{% url 'encyclopedia:EditPage' {{title}}  %}"  method="post" width=90% >
    {% csrf_token %}
-   {{form}}
-   <label for="content"><h4>Change Encyclopedia Item :</h4></label>
-   <textarea type="text" id="NewContent" name="NewContent" required >{{content}}</textarea>
-   <br>
-   <button type="button" class="btn btn-info" onclick="showNewcontent()">See New content</button>
-   <br>
-    <p id="NewContent" ></p>
 
+   <h4>Change Encyclopedia Item :</h4>
+   <textarea type="text" wrap="hard"  name="NewTextArea" >   {{content}}
+   </textarea>
 
-    <form class="form-inline" style="position:relative">
-    <p>  <button type="submit" class="btn btn-success">Save New Content</button>
+   <br>
+   <form class="form-inline" style="position:relative ; top:15px" >
+    <p>  <button type="submit" onclick=showNewTextArea() class="btn btn-success">Save New Content</button>
           <button type="button" class="btn btn-danger">
           <a href="{% url 'encyclopedia:index' %}">Cancel</button>
     </p>
-     </form>
-
-
+    </form>
 </form>
 
 <script>
-function showNewcontent() {
-  var x = ""; var depois = ""
+function showNewTextArea() {
+  var x = ""; var depois = "";
   var x = document.getElementById("content").value;
-  document.getElementById("NewContent").innerHTML = x;
-  var depois = document.getElementById("NewContent");
-
+  document.getElementById("NewTextArea").innerHTML = x;
+  var depois = document.getElementById("NewTextArea").value;
+  alert(x);
 }
 </script>
+
+
 
 {% endblock %}
