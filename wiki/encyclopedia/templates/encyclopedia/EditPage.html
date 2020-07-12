@@ -31,17 +31,21 @@
    {{form}}
    <label for="content"><h4>Change Encyclopedia Item :</h4></label>
    <textarea type="text" id="content" name="content" required >{{content}}</textarea>
-</form>
-<form class="form-inline" style="position:relative">
-    <button type="submit" class="btn btn-success" onclick="myFunction()">See New content</button>
-    <button type="button" class="btn btn-danger"><a href="{% url 'encyclopedia:index' %}">Cancel</button>
+    <form class="form-inline" style="position:relative">
+        <p>  <button type="button" class="btn btn-info" onclick="showNewcontent()">See New content</button>
+          <button type="submit" class="btn btn-success">Save New Content</button>
+          <button type="button" class="btn btn-danger">
+          <a href="{% url 'encyclopedia:index' %}">Cancel</button></p>
+     </form>
+
+<p id="NewContetToSave"></p>
 </form>
 
 <script>
-function myFunction() {
-  var x = document.getElementById("NewContent").value;
+function showNewcontent() {
+  var x = document.getElementById("content").value;
   document.getElementById("NewContetToSave").innerHTML = x;
-  alert(x);
+
 }
 </script>
 
