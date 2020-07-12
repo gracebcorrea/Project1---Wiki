@@ -164,16 +164,14 @@ def EditPage(request):
     print("Estou na  Edit Page:")
 
     if request.method == "POST":
-        entry = request.POST["entry"]
-        title = request.POST["title"]
-        print("Estou no Post do Edit Page:" , title)
+        entry = str(request.POST["entry"])
+        title = str( request.POST["title"])
+        print("Reading:" ,  "Título:",title, "Entry:", entry)
 
+        content =util.get_entry(title)
+
+        print("reading:", content)
         """
-        content = request.POST["content"]
-        Econtent = request.POST["Econtent"]
-
-
-        print("Tentando salvar conteudo novo:", Econtent)
         if len(Econtent) >0:
             pagename = "Wiki/"+Etitle
             filename =  f"entries/{Etitle}.md"
@@ -193,13 +191,13 @@ def EditPage(request):
             return render(request, "encyclopedia/EntryPage.html", context)
             """
         context = {
-                "message":" Estou no Post do edit",
                 "title": title,
                 "entry": entry,
+                "content" : content,
                 "encyclopedia": request.session["Pwiki"]
         }
 
-        return render(request, "encyclopedia/EditPage.html",context)
+        return render(request, "encyclopedia/EntryPage.html",context)
 
 
     #    else:
@@ -207,7 +205,7 @@ def EditPage(request):
     else:
         context = {
                 "message":"Empty Form didn´t get into POST",
-        
+
             }
 
         return render(request, "encyclopedia/EditPage.html" ,context)
