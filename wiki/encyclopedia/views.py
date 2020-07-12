@@ -98,15 +98,15 @@ def EditPage(request, title):
     print("EditPage :", Etitle)
     if request.method == "POST":
         Textsize=0
-        Etitle =  title
+
         print("Reading:" , "Título:",Etitle)
 
         content =util.get_entry(Etitle)
         print("Old Content", content)
 
-        #NewTextArea= request.POST["NewTextArea"]
+        NewTextArea= request.POST["NewTextArea"]
         #NewTextArea= request.POST.get("NewTextArea")
-        #Textsize= NewTextArea.count()
+        Textsize= len(NewTextArea)
 
         print("Will Save:",Textsize )
 
@@ -119,7 +119,7 @@ def EditPage(request, title):
             with open (filename, "w") as myfile:
                 myfile.seek(0,0)
                 myfile.write(NewTextArea)
-                myfile.save()
+    
 
             context = {
                 "title": Etitle,
@@ -139,7 +139,8 @@ def EditPage(request, title):
             return render(request, "encyclopedia/EditPage.html",context)
     else:
         context = {
-                "message":"Empty Form didn´t get into POST",
+                "title":title,
+                "content" : util.get_entry(title)
             }
         return render(request, "encyclopedia/EditPage.html" ,context)
 
