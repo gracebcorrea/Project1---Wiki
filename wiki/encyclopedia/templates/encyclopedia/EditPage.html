@@ -30,21 +30,29 @@
    {% csrf_token %}
    {{form}}
    <label for="content"><h4>Change Encyclopedia Item :</h4></label>
-   <textarea type="text" id="content" name="content" required >{{content}}</textarea>
+   <textarea type="text" id="NewContent" name="NewContent" required >{{content}}</textarea>
+   <br>
+   <button type="button" class="btn btn-info" onclick="showNewcontent()">See New content</button>
+   <br>
+    <p id="NewContent" ></p>
+
+
     <form class="form-inline" style="position:relative">
-        <p>  <button type="button" class="btn btn-info" onclick="showNewcontent()">See New content</button>
-          <button type="submit" class="btn btn-success">Save New Content</button>
+    <p>  <button type="submit" class="btn btn-success">Save New Content</button>
           <button type="button" class="btn btn-danger">
-          <a href="{% url 'encyclopedia:index' %}">Cancel</button></p>
+          <a href="{% url 'encyclopedia:index' %}">Cancel</button>
+    </p>
      </form>
 
-<p id="NewContetToSave"></p>
+
 </form>
 
 <script>
 function showNewcontent() {
+  var x = ""; var depois = ""
   var x = document.getElementById("content").value;
-  document.getElementById("NewContetToSave").innerHTML = x;
+  document.getElementById("NewContent").innerHTML = x;
+  var depois = document.getElementById("NewContent");
 
 }
 </script>
