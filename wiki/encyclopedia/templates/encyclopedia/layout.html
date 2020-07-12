@@ -31,17 +31,8 @@
                 </div>
                 {%if page == "EntryPage"%}
                     <div>
-                      <form action= "{% url 'encyclopedia:EditPage'%}" method="post">
-                           {% csrf_token %}
-                           {{form}}
-                           <input  type="hidden"  name="title" id={{title}} value={{title}}>
-                           <input  type="hidden"  name="entry" id={{entry}} value={{entry}}>
-                           <a href="{% url 'encyclopedia:EditPage'  %}" >Edit Title {{entry}}</a>
-                      </form>
+                       <a href="{% url 'encyclopedia:EditPage'  %}" >Edit Title {{entry}}</a>
                     </div>
-
-
-
                 {%endif%}
             {% block nav %}
             {% endblock %}
