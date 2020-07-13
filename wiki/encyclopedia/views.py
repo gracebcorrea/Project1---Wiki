@@ -22,15 +22,8 @@ def index(request):
     })
 
 
-"""
-   NewPage - falta:
-   Markdown content for the page.
-
-"""
 def NewPage(request):
     if request.method == "POST":
-        print(f"Entrei no post do New Page")
-
         title = request.POST["NewTitle"]
         _, filenames = default_storage.listdir("entries")
         arquivo = title+".md"
@@ -50,7 +43,7 @@ def NewPage(request):
             context={
                 "page": "EntryPage",
                 "pagename":pagename,
-                "entry":title.capitalize(),
+                "entry":title.upper(),
                 "title":title,
                 "content":markdown2.markdown(content),
                 "entries":util.save_entry(title=title, content=content),
@@ -62,13 +55,6 @@ def NewPage(request):
         return render(request, "encyclopedia/NewPage.html")
 
 
-"""
-   Entry Page: Falta:
-   Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be
-   converted to HTML before being displayed to the user. You may use the python-markdown2 package
-   to perform this conversion, installable via pip3 install markdown2.
-
-"""
 def EntryPage(request, entry):
     print("Estou na Entry Page")
     page = "EntryPage"
@@ -90,26 +76,18 @@ def EntryPage(request, entry):
 
 def EditPage(request, title):
     Etitle =  title
-    print("EditPage :", Etitle)
+
     if request.method == "POST":
         Textsize=0
 
-        print("Reading:" , "Título:",Etitle)
-
         content =util.get_entry(Etitle)
-        print("Old Content", content)
 
         NewTextArea= request.POST["NewTextArea"]
-        #NewTextArea= request.POST.get("NewTextArea")
+
         Textsize= len(NewTextArea)
-
-        print("Will Save:",Textsize )
-
-
         if Textsize:
             pagename = "Wiki/"+Etitle.capitalize()
             filename =  f"entries/{Etitle}.md"
-            print(pagename, filename)
 
             with open (filename, "w") as myfile:
                 myfile.seek(0,0)
@@ -118,16 +96,16 @@ def EditPage(request, title):
 
             context = {
                 "title": Etitle,
-                "entry": Etitle,
+                "entry": Etitle.upper(),
                 "content" :markdown2.markdown( util.get_entry(Etitle)),
                 "encyclopedia": request.session["Pwiki"]
             }
             return render(request, "encyclopedia/EntryPage.html",context)
         else:
             context = {
-                "entry": Etitle,
+                "entry": Etitle.upper(),
                 "title": Etitle,
-                "content" : markdown2.markdown( util.get_entry(Etitle)),
+                "content" :  util.get_entry(Etitle),
                 "message":" The New content is empty, please try again",
                 "encyclopedia": request.session["Pwiki"]
             }
@@ -135,7 +113,7 @@ def EditPage(request, title):
     else:
         context = {
                 "title":title,
-                "content" : util.get_entry(title)
+                "content": util.get_entry(title)
             }
         return render(request, "encyclopedia/EditPage.html" ,context)
 
@@ -145,7 +123,6 @@ def EditPage(request, title):
 def Search(request):
     if request.method == "POST":
         seekfile = request.POST["q"]
-        #seekword = "%"+request.POST["q"]+"%"
         seekword = request.POST["q"]
         count = 0
         _, filenames = default_storage.listdir("entries")
@@ -163,7 +140,7 @@ def Search(request):
                 "pagename": pagename,
                 "title": title,
                 "message":message,
-                "content":util.get_entry(title=title),
+                "content":markdown2.markdown( util.get_entry(title=title)),
                 "encyclopedia": request.session["Pwiki"]
                 }
            return render(request, "encyclopedia/EntryPage.html", context)
@@ -225,11 +202,11 @@ def RandomPage(request):
         drawncontent = util.get_entry(drawnfile)
 
         context = {
-                "Entry":drawnfile.capitalize(),
+                "Entry":drawnfile.upper(),
                 "pagename":drawnfile.capitalize(),
                 "randonposition":randonposition,
                 "title":drawnfile,
-                "content":drawncontent
+                "content":markdown2.markdown(drawncontent)
          }
 
         return render(request, "encyclopedia/EntryPage.html" ,context)
