@@ -119,7 +119,7 @@ def EditPage(request, title):
             with open (filename, "w") as myfile:
                 myfile.seek(0,0)
                 myfile.write(NewTextArea)
-    
+
 
             context = {
                 "title": Etitle,
@@ -143,12 +143,6 @@ def EditPage(request, title):
                 "content" : util.get_entry(title)
             }
         return render(request, "encyclopedia/EditPage.html" ,context)
-
-
-
-
-
-
 
 
 
