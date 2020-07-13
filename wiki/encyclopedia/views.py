@@ -157,8 +157,6 @@ def Search(request):
                     if seekword in myfile.read():
                         count = count + 1
                         titulo = re.sub(r"\.md$", "", filename) #o título é o nome do arquivo sem extensão
-                        print(f'Achei :', seekword, "em", meuarquivo )
-                        print(f"vou salvar para imprimir: ",titulo , str(count))
                         TitulosAchados.append(titulo)
 
             if count == 0:
