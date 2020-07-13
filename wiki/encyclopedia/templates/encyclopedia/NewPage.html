@@ -16,8 +16,6 @@
   textarea[type=text] {
        margin: 30px 0;
        width:90%;
-      /* rows="10";
-       cols="30";*/
 
     }
 
@@ -32,10 +30,9 @@
         <label for="NewTitle"><b>Research Title Name :</b></label>
         <p>Please choose a word to tag your Item.<p>
         <input type="text" class="form-control" id="NewTitle" name="NewTitle" placeholder="Title for research" required>
-
-        <br>
-        <label for="NewContent"><b>Your New Encyclopedia Item :</b></label>
-        <textarea type="text" class="form-control" id="NewContent" name="NewContent" placeholder="Place here your information" required ></textarea>
+        <p ><h2 style="color:red; background-color:pink">{{message}}<h2></p>
+        <label for="NewContent"><b>Please describe your New Encyclopedia Item :</b></label>
+        <textarea rows='13' cols='30' type="text" class="form-control"  id="NewContent" name="NewContent" placeholder="Place here your information" required ></textarea>
 
         <br>
         <form class="form-inline" style="position:relative; top:100px">
