@@ -1,20 +1,15 @@
-import shutil, tempfile, os, os.path, re, markdown,random
+import shutil, tempfile, os, os.path, re, markdown,random, markdown2
+
+from markdown2 import Markdown
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, path, NoReverseMatch
 from django.core.files.storage import default_storage
 
+
 from . import util, views
 
-"""
-class NewEntryForm(forms.Form):
-    title = forms.CharField(label="title")
-    content = forms.CharField(label="content")
-    pagename = forms.CharField(label="pagename")
-    NewContent = forms.CharField(label="NewContent")
-    entry = forms.CharField(label="entry")
-"""
 
 #Index Page return all itens from enciclopedia
 def index(request):
@@ -30,32 +25,39 @@ def index(request):
 """
    NewPage - falta:
    Markdown content for the page.
-   when the page is saved, if an encyclopedia entry already exists with the provided title, the user should
-   be presented with an error message.
+
 """
 def NewPage(request):
     if request.method == "POST":
         print(f"Entrei no post do New Page")
 
         title = request.POST["NewTitle"]
-        content = request.POST["NewContent"]
-        rastag = "# "+title
-        pagename = "Wiki/"+title.capitalize()
+        _, filenames = default_storage.listdir("entries")
+        arquivo = title+".md"
+        print(title, filenames)
+        if arquivo in filenames:
+            context={
+                    "message" : "This Title already exists, please choose other Title"
+                    }
+            return render(request, "encyclopedia/NewPage.html", context)
 
-        html = markdown.markdown(content)
+        else:
+            content = request.POST["NewContent"]
+            rastag = "# "+title
+            pagename = "Wiki/"+title.capitalize()
 
-        context={
-             "page": "EntryPage",
-             "pagename":pagename,
-             "entry":title.capitalize(),
-             "title":title,
-             "content":content,
-             "entries":util.save_entry(title=title, content=content),
-             "entries":insert_line(file_name=f"entries/{title}.md", line_number= 1, conteudo=rastag),
-             "encyclopedia": request.session["Pwiki"]
-        }
 
-        return render(request,"encyclopedia/EntryPage.html",context)
+            context={
+                "page": "EntryPage",
+                "pagename":pagename,
+                "entry":title.capitalize(),
+                "title":title,
+                "content":markdown2.markdown(content),
+                "entries":util.save_entry(title=title, content=content),
+                "entries":insert_line(file_name=f"entries/{title}.md", line_number= 1, conteudo=rastag),
+                "encyclopedia": request.session["Pwiki"]
+            }
+            return render(request,"encyclopedia/EntryPage.html",context)
     else:
         return render(request, "encyclopedia/NewPage.html")
 
@@ -73,25 +75,18 @@ def EntryPage(request, entry):
     title = str(entry)
     pagename = "Wiki/"+title.capitalize()
     content = util.get_entry(title=title)
-    html = markdown.markdown(content)
+    #html = markdown2.markdown(content)
 
     context = {
         "entry" :title,
         "pagename": pagename,
         "title": title,
-        "content":html,
+        "content":markdown2.markdown(content),
         "page": page,
         "encyclopedia": request.session["Pwiki"]
         }
     return render(request, "encyclopedia/EntryPage.html", context)
 
-"""
-Edit Page:  Falta:
-The textarea should be pre-populated with the existing Markdown content of the page.
-(i.e., the existing content should be the initial value of the textarea).
-The user should be able to click a button to save the changes made to the entry.
-Once the entry is saved, the user should be redirected back to that entry’s page.
-"""
 
 def EditPage(request, title):
     Etitle =  title
@@ -124,7 +119,7 @@ def EditPage(request, title):
             context = {
                 "title": Etitle,
                 "entry": Etitle,
-                "content" : util.get_entry(Etitle),
+                "content" :markdown2.markdown( util.get_entry(Etitle)),
                 "encyclopedia": request.session["Pwiki"]
             }
             return render(request, "encyclopedia/EntryPage.html",context)
@@ -132,7 +127,7 @@ def EditPage(request, title):
             context = {
                 "entry": Etitle,
                 "title": Etitle,
-                "content" : util.get_entry(Etitle),
+                "content" : markdown2.markdown( util.get_entry(Etitle)),
                 "message":" The New content is empty, please try again",
                 "encyclopedia": request.session["Pwiki"]
             }
@@ -212,15 +207,6 @@ def Search(request):
             }
         return render(request, "encyclopedia/Search.html", context)
 
-
-
-
-
-
-
-
-
-#Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
 
 def RandomPage(request):
     if request.method == "GET":
