@@ -1,34 +1,31 @@
 # MarkDownCodes
 
-# Título nível 1
+# Title level 1
 
-## Título nível 2
+## Title level 2
 
-### Título nível 3
+### Title level 3
 
-#### Título nível 4
+#### Title level 4
 
-##### Título nível 5
+##### Title level 5
 
-###### Título nível 6
-
-
-
-Este é um parágrafo.
-
-  
-
-Este é outro parágrafo.
+###### Title level 6
 
 
 
-Primeira linha do parágrafo.··
-
-Segunda linha do parágrafo.
+This is a paragrath.
 
 
 
-Markdown  é _cool_!
+This is other paragrath.
 
 
 
+First line of a paragrath.!
+
+Second line of a paragrath.!
+
+
+
+Markdown  is  _cool_!
