@@ -29,7 +29,8 @@
    {% csrf_token %}
 
    <h4>Change Encyclopedia Item :</h4>
-   <textarea rows='13' cols='30' type="text" wrap="hard"  name="NewTextArea" >   {{content}}
+   <textarea rows='13' cols='30' type="text" wrap="hard"  name="NewTextArea" >
+      {{content | safe}}
    </textarea>
 
    <br>
