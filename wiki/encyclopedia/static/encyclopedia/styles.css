@@ -17,6 +17,10 @@ textarea {
     width: 80%;
 }
 
+button {
+    color:white;
+}
+
 .main {
     padding: 10px;
 }
