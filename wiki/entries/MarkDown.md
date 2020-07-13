@@ -1,40 +1,32 @@
 MarkDown
-Como transformar aquivos Markdown em Html e vice-versa?/r/n.
+OVERVIEW
+PHILOSOPHY
+Markdown is intended to be as easy-to-read and easy-to-write as is feasible.
 
-Markdown � uma linguagem simples de marca��o originalmente criada por John Gruber[1] e Aaron Swartz.[2] Markdown converte seu texto em HTML v�lido.
+Readability, however, is emphasized above all else. A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions. While Markdown’s syntax has been influenced by several existing text-to-HTML filters — including Setext, atx, Textile, reStructuredText, Grutatext, and EtText — the single biggest source of inspiration for Markdown’s syntax is the format of plain text email.
 
-Texto com �nfase:
+To this end, Markdown’s syntax is comprised entirely of punctuation characters, which punctuation characters have been carefully chosen so as to look like what they mean. E.g., asterisks around a word actually look like *emphasis*. Markdown lists look like, well, lists. Even blockquotes look like quoted passages of text, assuming you’ve ever used email.
 
-enfatizado (e.g., it�lico)
+INLINE HTML
+Markdown’s syntax is intended for one purpose: to be used as a format for writing for the web.
 
-fortemente enfatizado (e.g., negrito)
+Markdown is not a replacement for HTML, or even close to it. Its syntax is very small, corresponding only to a very small subset of HTML tags. The idea is not to create a syntax that makes it easier to insert HTML tags. In my opinion, HTML tags are already easy to insert. The idea for Markdown is to make it easy to read, write, and edit prose. HTML is a publishing format; Markdown is a writing format. Thus, Markdown’s formatting syntax only addresses issues that can be conveyed in plain text.
 
-C�digo:
+For any markup that is not covered by Markdown’s syntax, you simply use HTML itself. There’s no need to preface it or delimit it to indicate that you’re switching from Markdown to HTML; you just use the tags.
 
-codigo
+The only restrictions are that block-level HTML elements — e.g. <div>, <table>, <pre>, <p>, etc. — must be separated from surrounding content by blank lines, and the start and end tags of the block should not be indented with tabs or spaces. Markdown is smart enough not to add extra (unwanted) <p> tags around HTML block-level tags.
 
-Listas:
+Markdown provides backslash escapes for the following characters:
 
-Um item em uma lista n�o ordenada
-
-Outro item em uma lista n�o ordenada
-
-Um item em uma lista ordenada
-
-Outro item em uma lista ordenada
-
-Cabe�alhos:
-
-Cabe�alho de primeiro n�vel
-Cabe�alho de quarto n�vel
-Sintaxe alternativa para os dois primeiros cabe�alhos:
-
-Cabe�alho de primeiro n�vel
-
-====================
-
-Cabe�alho de segundo n�vel
-
-Cita��es:
-
-Esse texto ser� envolto pelo elemento HTML blockquote.
+\   backslash
+`   backtick
+*   asterisk
+_   underscore
+{}  curly braces
+[]  square brackets
+()  parentheses
+#   hash mark
++   plus sign
+-   minus sign (hyphen)
+.   dot
+!   exclamation mark
