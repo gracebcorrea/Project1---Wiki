@@ -61,17 +61,21 @@ def EntryPage(request, entry):
     title = str(entry)
     pagename = "Wiki/"+title.capitalize()
     content = util.get_entry(title=title)
-    #html = markdown2.markdown(content)
 
-    context = {
-        "entry" :title,
-        "pagename": pagename,
-        "title": title,
-        "content":markdown2.markdown(content),
-        "page": page,
-        "encyclopedia": request.session["Pwiki"]
-        }
-    return render(request, "encyclopedia/EntryPage.html", context)
+    if content:
+       context = {
+       "entry" :title,
+       "pagename": pagename,
+       "title": title,
+       "content":markdown2.markdown(content),
+       "page": page,
+       "encyclopedia": request.session["Pwiki"]
+       }
+       return render(request, "encyclopedia/EntryPage.html", context)
+    else:
+       return HttpResponse("404 This content is not available")
+
+
 
 
 def EditPage(request, title):
